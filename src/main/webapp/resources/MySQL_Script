@@ -1,0 +1,243 @@
+CREATE TABLE `s_messages` (
+	`message_id` INT NOT NULL AUTO_INCREMENT,
+	`case_id` INT NOT NULL,
+	`user_id` INT NOT NULL,
+	`message_time` DATETIME NOT NULL,
+	`message_text` TEXT NOT NULL,
+    `is_read` VARCHAR(255) NOT NULL,
+    `path` VARCHAR(255),
+	PRIMARY KEY (`message_id`)
+);
+
+CREATE TABLE `s_projects` (
+	`project_id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL,
+	`user_customer_id` INT NOT NULL,
+	`date_create` DATETIME NOT NULL,
+	`status` VARCHAR(255) NOT NULL,
+	`technology_type` VARCHAR(255) NOT NULL,
+	PRIMARY KEY (`project_id`)
+);
+
+CREATE TABLE `s_cases` (
+	`project_id` INT NOT NULL,
+	`case_id` INT NOT NULL AUTO_INCREMENT,
+	`user_manager_id` INT NOT NULL,
+	`title` TEXT NOT NULL,
+	`status` VARCHAR(255) NOT NULL,
+	`date_create` DATETIME NOT NULL,
+	`language` VARCHAR(5) NOT NULL,
+	`emergency` TINYINT(1) NOT NULL,
+	`appointment_time` DATETIME DEFAULT NULL,
+	PRIMARY KEY (`case_id`)
+);
+
+CREATE TABLE `s_manager_info` (
+	`user_id` INT NOT NULL,
+	`name` VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE `s_customer_info` (
+	`user_id` INT NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
+	`company` VARCHAR(255) NOT NULL,
+	`phone` VARCHAR(255) NOT NULL,
+	`email` VARCHAR(255) NOT NULL,
+	`web_site` VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE `s_estimates` (
+	`estimate_id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL,
+	`email` VARCHAR(255) NOT NULL,
+	`estimate_request` TEXT NOT NULL,
+	`date_request` DATETIME NOT NULL,
+	`phone` VARCHAR(20) NOT NULL,
+	`is_respond` TINYINT(1) NOT NULL,
+	`is_price_request` TINYINT(1) NOT NULL,
+	`is_question_request` TINYINT(1) NOT NULL,
+	`path` VARCHAR(255),
+	`estimate_generated_id` VARCHAR(50) DEFAULT NULL,
+	`customer_info_id` INT DEFAULT NULL,
+	PRIMARY KEY (`estimate_id`)
+);
+
+CREATE TABLE `app_user` (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	sso_id VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	is_full_created TINYINT(1) NOT NULL,
+	PRIMARY KEY (id),
+    UNIQUE (sso_id)
+);
+
+CREATE TABLE `user_profile` (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	type VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id),
+    UNIQUE (type)
+);
+
+CREATE TABLE `app_user_user_profile` (
+    user_id BIGINT NOT NULL,
+    user_profile_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, user_profile_id)
+);
+
+CREATE TABLE `persistent_logins` (
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL,
+    PRIMARY KEY (series)
+);
+
+CREATE TABLE `s_staff_info` (
+	`user_id` INT NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
+	`phone` VARCHAR(255) NOT NULL,
+	`email` VARCHAR(255) NOT NULL,
+	`birthday` DATE NOT NULL
+);
+
+CREATE TABLE `s_google_cloud_keys` (
+  `google_cloud_keys_id` INT NOT NULL AUTO_INCREMENT,
+  `staff_info_id` INT NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`google_cloud_keys_id`)
+);
+
+CREATE TABLE `s_message_task` (
+  `message_task_id` INT NOT NULL AUTO_INCREMENT,
+  `staff_info_id` INT NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `message_text` TEXT NOT NULL,
+  `date` DATETIME NOT NULL,
+  `app_user_id` INT NOT NULL,
+  `is_approve` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`message_task_id`)
+);
+
+CREATE TABLE `s_notices` (
+	`notices_id` INT NOT NULL,
+	`title` VARCHAR(255) NOT NULL,
+	`notices_text` text NOT NULL,
+	`data_create` datetime NOT NULL,
+	`isActiv` tinyint(1) NOT NULL,
+	`path` VARCHAR(255),
+	PRIMARY KEY (`notices_id`)
+);
+
+INSERT INTO `user_profile`(type)
+VALUES ('CUSTOMER');
+
+INSERT INTO `user_profile`(type)
+VALUES ('ADMIN');
+
+INSERT INTO `user_profile`(type)
+VALUES ('MANAGER');
+
+INSERT INTO `user_profile`(type)
+VALUES ('STAFF');
+
+INSERT INTO `app_user`(sso_id, password, is_full_created)
+VALUES ('admin@mail.com',123, 0);
+
+INSERT INTO `app_user`(sso_id, password, is_full_created)
+VALUES ('manager1@mail.com',123, 0);
+
+INSERT INTO `app_user`(sso_id, password, is_full_created)
+VALUES ('manager2@mail.com',123, 0);
+
+INSERT INTO `app_user`(sso_id, password, is_full_created)
+VALUES ('customer1@mail.com',123, 0);
+
+INSERT INTO `app_user`(sso_id, password, is_full_created)
+VALUES ('customer2@mail.com',123, 0);
+
+INSERT INTO `app_user`(sso_id, password, is_full_created)
+VALUES ('customer3@mail.com',123, 0);
+
+INSERT INTO `app_user_user_profile` (user_id, user_profile_id)
+  value(4,1);
+
+  INSERT INTO `app_user_user_profile` (user_id, user_profile_id)
+	value(5,1);
+
+   INSERT INTO `app_user_user_profile` (user_id, user_profile_id)
+  value(6,1);
+
+    INSERT INTO `app_user_user_profile` (user_id, user_profile_id)
+  value(2,3);
+
+  INSERT INTO `app_user_user_profile` (user_id, user_profile_id)
+  value(3,1);
+
+  INSERT INTO `app_user_user_profile` (user_id, user_profile_id)
+    value(1,2);
+
+INSERT INTO `s_customer_info`(user_id, name, company, phone, email, web_site)
+VALUES (4, 'sasha','customer1','111 111 11 11','email1@mail.com', 'xxx1.com');
+
+INSERT INTO `s_customer_info`(user_id, name, company, phone, email, web_site)
+VALUES (5, 'maxim','customer2','111 111 11 11','email2@mail.com', 'xxx2.com');
+
+INSERT INTO `s_customer_info`(user_id, name, company, phone, email, web_site)
+VALUES (5, 'oksana','customer3','111 111 11 11','email3@mail.com', 'xxx3.com');
+
+INSERT INTO `s_manager_info`(user_id, name)
+VALUES (2, 'petya');
+
+INSERT INTO `s_manager_info`(user_id, name)
+VALUES (3, 'masha');
+
+INSERT INTO `s_projects`(name, user_customer_id, date_create, status, technology_type)
+VALUES ('AMMATA', 4,'2017-01-20 13:00:00', 1, 'JAVA');
+
+INSERT INTO `s_projects`(name, user_customer_id, date_create, status, technology_type)
+VALUES ('ComonBaby', 4,'2017-01-25 13:00:00', 1, 'C++');
+
+INSERT INTO `s_projects`(name, user_customer_id, date_create, status, technology_type)
+VALUES ('DRONE', 5,'2017-01-27 13:00:00', 1, 'JS');
+
+INSERT INTO s_projects(name, user_customer_id, date_create, status, technology_type)
+VALUES ('#$GENERAL', 6,'2017-01-27 13:00:00', 1, 'IOS');
+
+INSERT INTO `s_cases`(project_id, user_manager_id, title, status,date_create, language, emergency, appointment_time)
+VALUES (1, 2, 'database1', 2, '2017-01-23 13:00:00', 'kr', 0, '2017-01-24 13:00:00');
+
+INSERT INTO `s_cases`(project_id, user_manager_id, title, status,date_create, language, emergency, appointment_time)
+VALUES (1, 2, 'database2', 1, '2017-01-24 13:00:00', 'kr', 0, '2017-01-25 13:00:00');
+
+INSERT INTO `s_cases`(project_id, user_manager_id, title, status, date_create, language, emergency, appointment_time)
+VALUES (1, 2, 'database3', 1, '2017-01-25 13:00:00', 'kr', 0, '2017-01-26 13:00:00');
+
+INSERT INTO `s_cases`(project_id, user_manager_id, title, status, date_create, language, emergency, appointment_time)
+VALUES (2, 3, 'database1', 1, '2017-01-26 13:00:00', 'kr', 0, '2017-01-27 13:00:00');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (1, 4, '2017-01-25 13:00:00','hello, i need.....', 'READ');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (1, 2, '2017-01-25 13:00:00','hello. ok, we try do it.','READ');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (1, 4, '2017-01-25 13:00:00','thanks','READ');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (2, 4, '2017-01-25 13:00:00','text.....','NOTREAD');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (2, 3, '2017-01-25 13:00:00','yayayaya','READ');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (3, 5, '2017-01-25 13:00:00','hello, i need.....','NOTREAD');
+
+INSERT INTO `s_messages`(case_id, user_id, message_time, message_text, is_read)
+VALUES (4, 5, '2017-02-15 13:00:00','hello, i need.....','NOTREAD');
+
+INSERT INTO `s_estimates`(name, email, estimate_request, date_request, phone, is_respond, is_price_request, is_question_request , estimate_generated_id, customer_info_id)
+VALUES ('Ammata', 'mr_jeka@bk.ru', 'text of first request', '2017-01-25 13:00:00', '+38 000 00 00', false, false, false, "0001", 4);
+
+INSERT INTO `s_estimates`(name, email, estimate_request, date_request, phone, is_respond, is_price_request, is_question_request, estimate_generated_id, customer_info_id)
+VALUES ('CamonBaby', 'z.murenko@gmail.com', 'text of second request', '2017-01-25 13:00:00', '+38 111 111 11', false, false, false, "0002", 4);

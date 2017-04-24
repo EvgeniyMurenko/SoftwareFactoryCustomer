@@ -1,0 +1,53 @@
+@media screen and (max-width:1189px) {
+}
+@media screen and (max-width:1000px) {
+    .header { margin-top: 15px; margin-bottom: 15px; }
+    .projects-list { margin-bottom: 20px; }
+}
+@media screen and (max-width:767px) {
+    .logo { text-align: center; margin: 10px 0; }
+    .login { text-align: center !important; padding-top: 5px; }
+    .es-title { float: none; width: 100%; }
+    .es-btn { float: none; width: 100%; }
+    .es-btn a { width: 100%; margin-top: 10px; }
+    .certificate { height: auto !important; margin-bottom: 20px; }
+    .cf-title { height: auto !important; }
+    .holder { margin: 10px 0; text-align: center; }
+    .avatar-welcome { display: none !important; }
+    .btn-mobile { width: 100% !important; margin-left: 0 !important; margin-top: 5px; }
+
+    /* user info dropdown menu */
+    .nav { padding-right: 0px; }
+    .navbar-nav { margin: 0; }
+    .avatar { margin-bottom: 10px; }
+    .dropdown { text-align: center; }
+    .dropdown .avatar { display: inline-block !important; margin: 0 auto 10px auto; }
+    .dropdown-menu:before { border: 0; }
+    .dropdown-menu li { width: 100%; }
+    .dropdown-menu li a { color: #333; line-height: 35px !important; }
+    .dropdown-menu > li > a:hover { background-color: #03a9f4; color: #fff !important; }
+    .dropdown-menu li a:hover > i.fa { color: #fff; }
+    .dropdown-menu li:not(:last-child) { border-bottom: 1px solid #03a9f4; }
+    .dropdown-menu .dropdown-menu-header { background-color: transparent; color: #333; }
+
+}
+@media screen and (max-width:639px) {
+    .information .btn { width: 100%; }
+
+    .bl-quote { float: none; width: 100%; text-align: center; }
+    .ft-icon, ft-content { float: none; }
+    .ft-icon { float: none; width: 100%; text-align: center; }
+    .ft-title { text-align: center; }
+    .ft-body { text-align: justify; }
+    .bottom-informer { text-align: center !important; }
+    .bottom-menu { margin-top: 10px; text-align: center !important; }
+    .orange-button { display: none; }
+    .error-page .error-404 { font-size: 100pt; }
+
+    .content .messages .message-manager-informer,
+    .content .messages .message-customer-informer { margin-right: 0 !important; margin-left: 0 !important; }
+    .content .messages .message-manager-informer .mi-m-time,
+    .content .messages .message-customer-informer .mi-c-time { display: block !important; float: none !important;  }
+}
+@media screen and (max-width:480px) {
+}

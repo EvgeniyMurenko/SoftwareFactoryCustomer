@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SoftwareFactoryCustomer:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SoftwareFactory.war">
+      <element id="artifact" artifact-name="SoftwareFactoryCustomer:war exploded" />
+    </root>
+  </artifact>
+</component>
