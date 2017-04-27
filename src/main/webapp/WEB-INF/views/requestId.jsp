@@ -1,4 +1,5 @@
-<%@ page import="com.SoftwareFactory.model.Estimate" %>
+<%@ page import="com.SoftwareFactoryCustomer.model.Estimate" %>
+<%@ page import="com.SoftwareFactoryCustomer.model.User" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -30,7 +31,10 @@
 </header>
 <!-- #End Header -->
 
-<% Estimate estimate = (Estimate) request.getAttribute("CustomerEstimate"); %>
+<%
+    Estimate estimate = (Estimate) request.getAttribute("CustomerEstimate");
+    User user = (User) request.getAttribute("User");
+%>
 
 <section class="container content mb40 request-id">
 
@@ -42,7 +46,8 @@
             <form action="${generateCustomerIdUrl}" method="post">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="hidden" name="estimateId" value="<%out.print(estimate.getId());%>">
+
+                        <input type="hidden" name="userId" value="<%out.print(user.getId());%>">
 
                         <div class="form-group">
                             <input type="text" name="name" id="name" class="form-control"

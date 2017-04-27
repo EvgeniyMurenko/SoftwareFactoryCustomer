@@ -1,5 +1,6 @@
 package com.SoftwareFactoryCustomer.dao;
 
+
 import com.SoftwareFactoryCustomer.model.Message;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,8 +21,8 @@ public class MessageDaoImpl implements MessageDao {
     private SessionFactory sessionFactory;
 
     @Autowired
-    public void setSessionFactory(SessionFactory sf) {
-        this.sessionFactory = sf;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 

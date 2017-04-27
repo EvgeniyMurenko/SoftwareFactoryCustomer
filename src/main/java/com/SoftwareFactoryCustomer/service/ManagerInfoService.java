@@ -16,4 +16,6 @@ public interface ManagerInfoService {
     List<ManagerInfo> getAllManagerInfos();
 
     ManagerInfo getManagerInfoById(Long id);
+
 }
+

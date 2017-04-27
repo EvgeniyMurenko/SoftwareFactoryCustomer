@@ -5,10 +5,30 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "s_estimates")
 public class Estimate {
+
+    public Estimate() {
+    }
+
+    public Estimate(String name, String estimateRequest, String email, boolean isRespond, boolean isPriceRequest,
+                    boolean isQuestionRequest, String phone, Date dateRequest, String estimateGeneratedId,
+                    Set<EstimateLink> estimateLinks, CustomerInfo customerInfo) {
+        this.name = name;
+        this.estimateRequest = estimateRequest;
+        this.email = email;
+        this.isRespond = isRespond;
+        this.isPriceRequest = isPriceRequest;
+        this.isQuestionRequest = isQuestionRequest;
+        this.phone = phone;
+        this.dateRequest = dateRequest;
+        this.estimateGeneratedId = estimateGeneratedId;
+        this.estimateLinks = estimateLinks;
+        this.customerInfo = customerInfo;
+    }
 
     @Id
     @GeneratedValue(generator = "increment2")
@@ -53,11 +73,12 @@ public class Estimate {
     private String estimateGeneratedId;
 
 
-    @Column(name = "path")
-    private String estimatePath;
+    @OneToMany(mappedBy = "estimate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<EstimateLink> estimateLinks;
+
 
     @OneToOne
-    @JoinColumn(name="customer_info_id")
+    @JoinColumn(name = "customer_info_id")
     CustomerInfo customerInfo;
 
     public Long getId() {
@@ -140,14 +161,6 @@ public class Estimate {
         this.estimateRequest = estimateRequest;
     }
 
-    public String getEstimatePath() {
-        return estimatePath;
-    }
-
-    public void setEstimatePath(String estimatePath) {
-        this.estimatePath = estimatePath;
-    }
-
     public CustomerInfo getCustomerInfo() {
         return customerInfo;
     }
@@ -156,19 +169,11 @@ public class Estimate {
         this.customerInfo = customerInfo;
     }
 
-    public Estimate() {
+    public Set<EstimateLink> getEstimateLinks() {
+        return estimateLinks;
     }
 
-    public Estimate(String name, String estimateRequest, String email, boolean isRespond, boolean isPriceRequest, boolean isQuestionRequest, String phone, Date dateRequest, String estimateGeneratedId, String estimatePath) {
-        this.name = name;
-        this.estimateRequest = estimateRequest;
-        this.email = email;
-        this.isRespond = isRespond;
-        this.isPriceRequest = isPriceRequest;
-        this.isQuestionRequest = isQuestionRequest;
-        this.phone = phone;
-        this.dateRequest = dateRequest;
-        this.estimateGeneratedId = estimateGeneratedId;
-        this.estimatePath = estimatePath;
+    public void setEstimateLinks(Set<EstimateLink> estimateLinks) {
+        this.estimateLinks = estimateLinks;
     }
 }

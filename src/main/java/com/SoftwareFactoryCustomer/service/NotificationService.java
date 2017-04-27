@@ -2,7 +2,6 @@ package com.SoftwareFactoryCustomer.service;
 
 import com.google.android.gcm.server.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;

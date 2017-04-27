@@ -4,10 +4,22 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "s_notices")
 public class Notice {
+
+    public Notice() {
+    }
+
+    public Notice(String title, String noticeText, Date dataCreate, Boolean isActiv, Set<NoticeLink> noticeLinks) {
+        this.title = title;
+        this.noticeText = noticeText;
+        this.dataCreate = dataCreate;
+        this.isActiv = isActiv;
+        this.noticeLinks = noticeLinks;
+    }
 
     @Id
     @GeneratedValue(generator = "increment2")
@@ -27,18 +39,15 @@ public class Notice {
     @Column(name = "isActiv")
     private Boolean isActiv;
 
-    @Column(name="path")
-    private String filePath;
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<NoticeLink> noticeLinks;
 
-    public Notice() {
+    public Set<NoticeLink> getNoticeLinks() {
+        return noticeLinks;
     }
 
-    public Notice(String title, String noticeText, Date dataCreate, Boolean isActiv, String filePath) {
-        this.title = title;
-        this.noticeText = noticeText;
-        this.dataCreate = dataCreate;
-        this.isActiv = isActiv;
-        this.filePath = filePath;
+    public void setNoticeLinks(Set<NoticeLink> noticeLinks) {
+        this.noticeLinks = noticeLinks;
     }
 
     public Long getId() {
@@ -81,11 +90,5 @@ public class Notice {
         isActiv = activ;
     }
 
-    public String getFilePath() {
-        return filePath;
-    }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 }

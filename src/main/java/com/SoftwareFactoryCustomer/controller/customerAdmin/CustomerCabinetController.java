@@ -5,7 +5,6 @@ package com.SoftwareFactoryCustomer.controller.customerAdmin;
 import com.SoftwareFactoryCustomer.comparator.CaseByStatusAndDateComparator;
 import com.SoftwareFactoryCustomer.comparator.MessageByDateComparator;
 import com.SoftwareFactoryCustomer.comparator.ProjectByDateComparator;
-import com.SoftwareFactoryCustomer.constant.MainPathEnum;
 import com.SoftwareFactoryCustomer.constant.MessageEnum;
 import com.SoftwareFactoryCustomer.constant.StatusEnum;
 import com.SoftwareFactoryCustomer.model.*;
@@ -79,8 +78,8 @@ public class CustomerCabinetController {
 
         ModelAndView customerCabinet = new ModelAndView("customerAdminViews/customerCase");
 
-        int userId = (Integer) httpSession.getAttribute("UserId");
-        CustomerInfo customerInfo = customerInfoService.getCustomerInfoById((long)userId);
+        Long userId = (Long) httpSession.getAttribute("UserId");
+        CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
 
         Set<Project> projectsToShow = customerInfo.getProjects();
 
@@ -104,8 +103,7 @@ public class CustomerCabinetController {
         System.out.print(projectName + " " + " " + caseName + " " + message + " " + " " + language);
 
 
-        //===================================================
-        Long userId = new Long((Integer)httpSession.getAttribute("UserId"));
+        Long userId = (Long) httpSession.getAttribute("UserId");
         CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
 
         Set<Project> projects = customerInfo.getProjects();
@@ -136,27 +134,26 @@ public class CustomerCabinetController {
         projectService.updateProject(project);
         Case caseCreated = caseService.getCaseById(newCase.getId());
         Set<Message> messages = caseCreated.getMessages();
-        Message msg = new Message();
-        msg.setaCase(caseCreated);
-        User us = userService.findById(userId.intValue());
-        msg.setUser(us);
-        msg.setMessageTime(date);
-        msg.setMessageText(message);
+        Message caseMessage = new Message();
+        caseMessage.setaCase(caseCreated);
+        User us = userService.findById(userId);
+        caseMessage.setUser(us);
+        caseMessage.setMessageTime(date);
+        caseMessage.setMessageText(message);
+        caseMessage.setMessageLinks(new HashSet<>());
 
-        msg.setIsRead(MessageEnum.NOTREAD.toString());
+        caseMessage.setIsRead(MessageEnum.NOTREAD.toString());
 
-        messages.add(msg);
-        messageService.addNewMessage(msg);
+        messages.add(caseMessage);
+        messageService.addNewMessage(caseMessage);
         caseCreated.setMessages(messages);
         caseService.updateCase(caseCreated);
 
-        if(!files[0].isEmpty()){
-            String pathToSaveFile = "/case/" + project.getId() + "/"+ newCase.getId() + "/" + msg.getId();
-            SaveFile sf = new SaveFile(pathToSaveFile, files);
-            sf.saveFile();
-            msg.setMessagePath(MainPathEnum.mainPath + pathToSaveFile);
-            messageService.updateMessage(msg);
-        }
+
+        SaveFile saveFile = new SaveFile(files);
+        saveFile.saveMessageFilesToMessage(caseMessage);
+        messageService.updateMessage(caseMessage);
+
 
         ModelAndView modelAndView = new ModelAndView("redirect:/list");
         return modelAndView;
@@ -170,7 +167,7 @@ public class CustomerCabinetController {
 
         // GET
         Case aCase = caseService.getCaseById(id);
-        int userId = (Integer) httpSession.getAttribute("UserId");
+        Long userId = (Long) httpSession.getAttribute("UserId");
         User currentUser = userService.findById(userId);
 
         aCase.setEmergency(emergency);
@@ -178,29 +175,25 @@ public class CustomerCabinetController {
         // CREATE MESSAGE
         Message message = new Message();
         message.setaCase(aCase);
-
         message.setUser(currentUser);
         message.setMessageTime(new Date());
         message.setMessageText(messageText);
         message.setIsRead(MessageEnum.NOTREAD.toString());
+        message.setMessageLinks(new HashSet<>());
         messageService.addNewMessage(message);
+
+
 
         // SAVE MESSAGE TO CASE
         Set <Message> messages = aCase.getMessages();
         messages.add(message);
         aCase.setMessages(messages);
 
+
         //SAVE FILE
-        if(!files[0].isEmpty()){
-            System.out.println("=======FILE LENGTH NOT NULL " + files.length);
-            String pathToSaveFile = "/case/" + aCase.getProject().getId() + "/"+ aCase.getId() + "/" + message.getId();
-            SaveFile sf = new SaveFile(pathToSaveFile, files);
-            sf.saveFile();
-            message.setMessagePath(MainPathEnum.mainPath + pathToSaveFile);
-            messageService.updateMessage(message);
-        } else {
-            System.out.println("=======FILE LENGTH NULL");
-        }
+        SaveFile saveFile = new SaveFile(files);
+        saveFile.saveMessageFilesToMessage(message);
+        messageService.updateMessage(message);
 
         caseService.updateCase(aCase);
 
@@ -302,7 +295,7 @@ public class CustomerCabinetController {
     //ADD GENERAL OBJECT THAT PERSIST IN ALL JSP
     private Set<Project>  addGeneralDataToMAVAndReturnProjects(ModelAndView modelAndView , HttpSession httpSession){
 
-        Long userId = new Long((Integer) httpSession.getAttribute("UserId"));
+        Long userId = (Long) httpSession.getAttribute("UserId");
         CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
 
         String customerName = customerInfo.getName();

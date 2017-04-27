@@ -1,5 +1,6 @@
 package com.SoftwareFactoryCustomer.dao;
 
+
 import com.SoftwareFactoryCustomer.model.Estimate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 
 @Repository("estimateDao")
 public class EstimateDaoImpl implements EstimateDao {

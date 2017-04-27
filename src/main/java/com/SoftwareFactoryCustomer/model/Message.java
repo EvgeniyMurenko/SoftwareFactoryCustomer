@@ -16,6 +16,15 @@ public class Message {
     public Message() {
     }
 
+    public Message(Case aCase, User user, Date messageTime, String messageText, String isRead, Set<MessageLink> messageLinks) {
+        this.aCase = aCase;
+        this.user = user;
+        this.messageTime = messageTime;
+        this.messageText = messageText;
+        this.isRead = isRead;
+        this.messageLinks = messageLinks;
+    }
+
     @Id
     @GeneratedValue(generator = "increment2")
     @GenericGenerator(name = "increment2", strategy = "increment")
@@ -27,22 +36,22 @@ public class Message {
     private Case aCase;
 
     @ManyToOne
-    @JoinColumn(name = "user_id" )
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "message_time", columnDefinition="DATETIME")
+    @Column(name = "message_time", columnDefinition = "DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date messageTime;
 
     @Column(name = "message_text")
-    @Type(type="text")
+    @Type(type = "text")
     private String messageText;
 
     @Column(name = "is_read")
     private String isRead;
 
-    @Column(name="path")
-    private String messagePath;
+    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<MessageLink> messageLinks;
 
     public Long getId() {
         return id;
@@ -60,7 +69,7 @@ public class Message {
         this.aCase = aCase;
     }
 
-   public User getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -92,20 +101,11 @@ public class Message {
         this.isRead = isRead;
     }
 
-    public String getMessagePath() {
-        return messagePath;
+    public Set<MessageLink> getMessageLinks() {
+        return messageLinks;
     }
 
-    public void setMessagePath(String messagePath) {
-        this.messagePath = messagePath;
-    }
-
-    public Message(Case aCase, User user, Date messageTime, String messageText, String isRead, String messagePath) {
-        this.aCase = aCase;
-        this.user = user;
-        this.messageTime = messageTime;
-        this.messageText = messageText;
-        this.isRead = isRead;
-        this.messagePath = messagePath;
+    public void setMessageLinks(Set<MessageLink> messageLinks) {
+        this.messageLinks = messageLinks;
     }
 }

@@ -30,7 +30,7 @@ public class SettingController {
         ModelAndView customerSettings = new ModelAndView("customerAdminViews/customerSettings");
 
         CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
-        User user = userService.findById((int) userId);
+        User user = userService.findById(userId);
 
         customerSettings.addObject("user", user);
         customerSettings.addObject("customerInfo", customerInfo);
@@ -63,7 +63,7 @@ public class SettingController {
                                                    @RequestParam("newPassword") String newPassword,
                                                    @RequestParam("confirmNewPassword") String confirmNewPassword) {
 
-        int userId = (Integer) httpSession.getAttribute("UserId");
+        Long userId = (Long) httpSession.getAttribute("UserId");
         User user = userService.findById(userId);
         if(newPassword.equals(confirmNewPassword) ){
             user.setPassword(newPassword);

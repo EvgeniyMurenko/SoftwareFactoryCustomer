@@ -1,5 +1,6 @@
 package com.SoftwareFactoryCustomer.dao;
 
+
 import com.SoftwareFactoryCustomer.model.GoogleCloudKey;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,7 +15,7 @@ import java.util.List;
 @Repository("googleCloudKeyDao")
 public class GoogleCloudKeyDaoImpl implements GoogleCloudKeyDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(GoogleCloudKeyDaoImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProjectDaoImpl.class);
     private SessionFactory sessionFactory;
 
     @Autowired

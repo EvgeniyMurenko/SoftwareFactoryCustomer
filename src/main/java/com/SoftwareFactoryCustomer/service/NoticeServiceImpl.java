@@ -1,13 +1,14 @@
 package com.SoftwareFactoryCustomer.service;
 
+
 import com.SoftwareFactoryCustomer.dao.NoticeDao;
-import com.SoftwareFactoryCustomer.model.Case;
 import com.SoftwareFactoryCustomer.model.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
@@ -49,4 +50,5 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> getAllNotices() {
         return noticeDao.findAll();
     }
+
 }

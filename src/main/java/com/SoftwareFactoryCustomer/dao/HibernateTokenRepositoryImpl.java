@@ -2,6 +2,7 @@ package com.SoftwareFactoryCustomer.dao;
 
 import java.util.Date;
 
+
 import com.SoftwareFactoryCustomer.model.PersistentLogin;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;

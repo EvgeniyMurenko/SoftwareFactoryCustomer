@@ -1,6 +1,8 @@
 package com.SoftwareFactoryCustomer.dao;
 
+
 import com.SoftwareFactoryCustomer.model.ManagerInfo;
+
 import java.util.List;
 
 public interface ManagerInfoDao {

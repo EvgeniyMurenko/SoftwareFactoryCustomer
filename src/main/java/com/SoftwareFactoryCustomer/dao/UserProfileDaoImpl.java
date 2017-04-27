@@ -1,14 +1,12 @@
 package com.SoftwareFactoryCustomer.dao;
 
-import java.util.List;
-
 import com.SoftwareFactoryCustomer.model.UserProfile;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-
+import java.util.List;
 
 
 @Repository("userProfileDao")

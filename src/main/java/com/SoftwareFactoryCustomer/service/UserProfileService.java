@@ -1,10 +1,9 @@
 package com.SoftwareFactoryCustomer.service;
 
+
 import com.SoftwareFactoryCustomer.model.UserProfile;
 
 import java.util.List;
-
-
 
 public interface UserProfileService {
 

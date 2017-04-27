@@ -1,7 +1,7 @@
 package com.SoftwareFactoryCustomer.service;
 
+
 import com.SoftwareFactoryCustomer.dao.MessageDao;
-import com.SoftwareFactoryCustomer.dao.MessageDaoImpl;
 import com.SoftwareFactoryCustomer.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

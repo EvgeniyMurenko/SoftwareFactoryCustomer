@@ -1,15 +1,13 @@
 package com.SoftwareFactoryCustomer.service;
 
+
 import com.SoftwareFactoryCustomer.model.User;
 
 import java.util.List;
 
-
-
-
 public interface UserService {
 
-	User findById(int id);
+	User findById(Long id);
 
 	User findBySSO(String sso);
 
@@ -21,6 +19,8 @@ public interface UserService {
 
 	List<User> findAllUsers();
 
-	boolean isUserSSOUnique(Integer id, String sso);
+	boolean isUserSSOUnique(Long id, String sso);
+
+	User createCustomerUser(String phone);
 
 }

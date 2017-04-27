@@ -3,6 +3,7 @@ package com.SoftwareFactoryCustomer.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class User implements Serializable{
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@NotEmpty
 	@Column(name="sso_id", unique=true, nullable=false)
@@ -32,11 +33,11 @@ public class User implements Serializable{
 	@Column(name="is_full_created")
 	private boolean isFullCreated;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

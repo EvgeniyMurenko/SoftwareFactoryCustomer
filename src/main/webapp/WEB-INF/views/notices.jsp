@@ -1,9 +1,8 @@
 <%@ page import="com.SoftwareFactoryCustomer.model.Notice" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.io.File" %>
-<%@ page import="com.SoftwareFactoryCustomer.constant.MainPathEnum" %>
-<%@ page import="com.SoftwareFactoryCustomer.constant.GlobalEnum" %>
+<%@ page import="com.SoftwareFactoryCustomer.model.NoticeLink" %>
+<%@ page import="java.util.Set" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -27,7 +26,7 @@
 <%@ include file="siteHeader.jsp" %>
 
 <% List<Notice> noticeList = (List<Notice>) request.getAttribute("noticeList");%>
-<%SimpleDateFormat dateFormatShow = new SimpleDateFormat("yyyy-MM-dd");%>
+<% SimpleDateFormat dateFormatShow = new SimpleDateFormat("yyyy-MM-dd");%>
 
 <!-- Content -->
 <section class="container content mb40">
@@ -56,41 +55,27 @@
                 <div class="notice-box-information other-font2" id="<%out.print("box_notice_"+count);%>" style="display: none; color: #000;">
                     <%out.print(notice.getNoticeText());%>
                     <%
-                        if (notice.getFilePath() != null) {
-                            File imageDirectory = new File(MainPathEnum.mainPath + "/" + notice.getFilePath());
-                            File[] imageFiles = imageDirectory.listFiles();
-                            if (imageFiles != null && imageFiles.length>0){
-                                for (int i = 0; i < imageFiles.length; i++) {
-                                    if(!imageFiles[i].isDirectory()){
-                                        String fileName = imageFiles[i].getName();
-                                %>
-                                            <img src="<%out.print(GlobalEnum.webRoot+"/show-image/notice/"+notice.getId()+"/"+fileName);%>"
-                                                 alt="<%out.print(fileName);%>" class="img-responsive mb10">
-                            <%      }
-                                }
-                            }
+                        Set<NoticeLink> noticeLinks = notice.getNoticeLinks();
+                        if (!noticeLinks.isEmpty()) {
 
-                            File videoDirectory = new File(MainPathEnum.mainPath+"/"+notice.getFilePath()+"/video");
-                            File[] videoFiles= videoDirectory.listFiles();
-                            if( videoFiles!= null && videoFiles.length > 0){
-                                for (int i=0; i<videoFiles.length; i++){
-                                    String urlVideo = GlobalEnum.webRoot+"/show-video/"+notice.getId()+"/"+videoFiles[i].getName(); %>
 
-                                        <div class="form-group form-img-thumbnail">
-                                            <video width="400" height="300" controls >
-                                                <source src="<%out.print(urlVideo);%>" >
-                                            </video>
-                                        </div>
-                            <%  }
-                            }
-                        }
-                        %>
+                                for (NoticeLink noticeLink : noticeLinks) {
+                    %>
+
+                                            <img src="<%out.print(noticeLink.getFileLink());%>"
+                                                 alt="<%out.print(noticeLink.getFileName());%>" class="img-responsive mb10">
+
+
+
+
 
                 </div>
                 <!-- #End Notice box -->
-                <% count++;
-                }
-                }%>
+                <%              }
+                            }
+                        }
+                    }
+                %>
 
             </div>
         </div>

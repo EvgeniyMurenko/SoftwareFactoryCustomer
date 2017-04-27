@@ -1,11 +1,9 @@
 package com.SoftwareFactoryCustomer.dao;
 
+
 import com.SoftwareFactoryCustomer.model.UserProfile;
 
 import java.util.List;
-
-
-
 
 public interface UserProfileDao {
 

@@ -1,5 +1,6 @@
 package com.SoftwareFactoryCustomer.dao;
 
+
 import com.SoftwareFactoryCustomer.model.CustomerInfo;
 import org.hibernate.Query;
 import org.hibernate.Session;

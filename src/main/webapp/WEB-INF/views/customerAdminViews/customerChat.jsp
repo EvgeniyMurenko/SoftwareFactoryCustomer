@@ -1,10 +1,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.SoftwareFactoryCustomer.constant.StatusEnum" %>
-<%@ page import="java.io.File" %>
-<%@ page import="com.SoftwareFactoryCustomer.constant.GlobalEnum" %>
 <%@ page import="com.SoftwareFactoryCustomer.model.*" %>
 <%@ page import="com.SoftwareFactoryCustomer.constant.ProjectEnum" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Set" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -31,21 +30,24 @@
 
     <!-- Buttons -->
     <div class="row mb20">
-        <% Long caseId = (Long) request.getAttribute("caseId"); %>
-        <% Case aCase = (Case) request.getAttribute("case"); %>
-        <% String caseStatus = (String) request.getAttribute("caseStatus"); %>
-        <% ArrayList<Message> messages = (ArrayList<Message>) request.getAttribute("messagesSorted"); %>
-        <% ManagerInfo managerInfo = (ManagerInfo) request.getAttribute("managerInfo");%>
-        <%SimpleDateFormat dateFormatShow = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
+        <%
+            Case aCase = (Case) request.getAttribute("case");
+            Long caseId = aCase.getId();
+            String caseStatus = aCase.getStatus();
+
+        ArrayList<Message> messages = (ArrayList<Message>) request.getAttribute("messagesSorted");
+        ManagerInfo managerInfo = (ManagerInfo) request.getAttribute("managerInfo");
+        SimpleDateFormat dateFormatShow = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        %>
 
         <div class="col-md-6"><a href="<c:url value="/cabinet/"/>" class="btn btn-primary btn-mobile">Back to CASE
             list</a></div>
 
         <%if (!caseStatus.equals(StatusEnum.CLOSE.toString())) {%>
-        <form action="/cabinet/case/<% out.print(Long.toString(caseId)); %>/close_case?${_csrf.parameterName}=${_csrf.token}"
+        <form action="/cabinet/case/<% out.print(caseId); %>/close_case?${_csrf.parameterName}=${_csrf.token}"
               method="POST">
             <div class="col-md-6 text-right">
-                <a href="/cabinet/case/<%out.print(Long.toString(aCase.getId())); %>/answer"
+                <a href="/cabinet/case/<%out.print(caseId); %>/answer"
                    class="btn btn-primary btn-mobile">Write this CASE</a>
 
 
@@ -114,14 +116,15 @@
                             class="mi-c-time pull-right"><% out.print(dateFormatShow.format(message.getMessageTime())); %></span></div>
                     <div class="mi-c-message">
                         <% out.print(message.getMessageText()); %>
-                        <% if (message.getMessagePath() != null) {
-                            File directory = new File(message.getMessagePath());
-                            File[] files = directory.listFiles();
-                            for (int i = 0; i < files.length; i++) {
-                                String fileName = files[i].getName();
-                                out.print("<a href=" + GlobalEnum.webRoot + "/download/" + message.getId() + "/" + fileName + "/" + ">" + fileName + "</a>");
+                        <%
+                            Set<MessageLink> messageLinks = message.getMessageLinks();
+                            if (!messageLinks.isEmpty()) {
+
+                                for (MessageLink messageLink : messageLinks) {
+                                    out.print("<a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a><br>");
+                                }
                             }
-                        } %>
+                        %>
                     </div>
                 </div>
             <%} else {%>
@@ -132,14 +135,14 @@
                         out.print(dateFormatShow.format(message.getMessageTime())); %></span></div>
                     <div class="mi-m-message">
                         <% out.print(message.getMessageText()); %>
-                        <% if (message.getMessagePath() != null) {
-                            File directory = new File(message.getMessagePath());
-                            File[] files = directory.listFiles();
-                            for (int i = 0; i < files.length; i++) {
-                                String fileName = files[i].getName();
-                                out.print("<a href=" + GlobalEnum.webRoot + "/download/" + message.getId() + "/" + fileName + "/" + ">" + fileName + "</a>");
+                        <% Set<MessageLink> messageLinks = message.getMessageLinks();
+                            if (!messageLinks.isEmpty()) {
+
+                                for (MessageLink messageLink : messageLinks) {
+                                    out.print("<a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a><br>");
+                                }
                             }
-                        } %>
+                        %>
                     </div>
                 </div>
             <%}%>

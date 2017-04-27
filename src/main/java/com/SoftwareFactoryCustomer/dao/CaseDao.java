@@ -1,8 +1,9 @@
 package com.SoftwareFactoryCustomer.dao;
 
-import com.SoftwareFactoryCustomer.model.Case;
-import java.util.List;
 
+import com.SoftwareFactoryCustomer.model.Case;
+
+import java.util.List;
 
 public interface CaseDao {
 

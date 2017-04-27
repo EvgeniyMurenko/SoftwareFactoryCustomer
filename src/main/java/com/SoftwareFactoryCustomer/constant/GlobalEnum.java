@@ -2,8 +2,8 @@ package com.SoftwareFactoryCustomer.constant;
 
 
 public enum  GlobalEnum {
-    webRoot ("http://52.35.180.149");
-    //webRoot ("http://localhost:8080");
+    /*webRoot ("http://52.35.180.149");*/
+    webRoot ("http://localhost:8080");
 
 
     private String value;
@@ -20,4 +20,5 @@ public enum  GlobalEnum {
     public String toString() {
         return this.getValue();
     }
+
 }

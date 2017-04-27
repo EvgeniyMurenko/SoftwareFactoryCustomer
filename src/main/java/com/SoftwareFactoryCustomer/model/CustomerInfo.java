@@ -11,8 +11,14 @@ public class CustomerInfo {
     }
 
     @Id
-    @Column(name = "user_id")
-    private Long Id;
+    @Column(name = "user_id", nullable = false)
+    private Long id;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     @Column(name = "name")
     private String name;
@@ -38,12 +44,12 @@ public class CustomerInfo {
     private Set<Project> projects;
 
 
-    public Long getUserId() {
-        return Id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.Id = Id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Project> getProjects() {
@@ -55,11 +61,11 @@ public class CustomerInfo {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -102,8 +108,9 @@ public class CustomerInfo {
         this.website = website;
     }
 
-    public CustomerInfo(Long id, String name, String company, String phone, String email, String website, Set<Project> projects) {
-        Id = id;
+
+    public CustomerInfo(User user, String name, String company, String phone, String email, String website, Set<Project> projects) {
+        this.user = user;
         this.name = name;
         this.company = company;
         this.phone = phone;
