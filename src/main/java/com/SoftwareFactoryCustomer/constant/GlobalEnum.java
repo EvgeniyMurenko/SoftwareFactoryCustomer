@@ -3,7 +3,7 @@ package com.SoftwareFactoryCustomer.constant;
 
 public enum  GlobalEnum {
     /*webRoot ("http://52.35.180.149");*/
-    webRoot ("http://localhost:8080");
+    webRoot ("http://54.76.53.40");
 
 
     private String value;

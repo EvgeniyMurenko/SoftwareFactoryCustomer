@@ -38,21 +38,20 @@
                 <h3 class="other-font2">공지 사항</h3>
 
                 <%
-                    int count = 1;
                     for (Notice notice : noticeList) {
                         if (notice.getActiv()) {
                 %>
 
                 <!-- Notice box -->
                 <div class="notice-box other-font2" style="color: #000;">
-                    <a href="javascript:void(0);" id="<%out.print("notice_"+count);%>" class="clearfix">
+                    <a href="javascript:void(0);" id="<%out.print("notice_"+notice.getId());%>" class="clearfix">
                         <span class="pull-left"><%out.print(notice.getTitle());%></span>
                         <span class="pull-right"><%out.print(dateFormatShow.format(notice.getDataCreate()));%>
                                 <i class="fa fa-chevron-down pl20"></i>
                             </span>
                     </a>
                 </div>
-                <div class="notice-box-information other-font2" id="<%out.print("box_notice_"+count);%>" style="display: none; color: #000;">
+                <div class="notice-box-information other-font2" id="<%out.print("box_notice_"+notice.getId());%>" style="display: none; color: #000;">
                     <%out.print(notice.getNoticeText());%>
                     <%
                         Set<NoticeLink> noticeLinks = notice.getNoticeLinks();
@@ -69,10 +68,13 @@
 
 
 
+
+
+                <%              }
+                            }%>
                 </div>
                 <!-- #End Notice box -->
-                <%              }
-                            }
+                <%
                         }
                     }
                 %>
