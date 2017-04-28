@@ -25,7 +25,7 @@ public class SettingController {
     @RequestMapping(value = "/settings/", method = RequestMethod.GET)
     public ModelAndView customerSettings(HttpSession httpSession) {
 
-        long userId = (Integer) httpSession.getAttribute("UserId");
+        Long userId = (Long) httpSession.getAttribute("UserId");
 
         ModelAndView customerSettings = new ModelAndView("customerAdminViews/customerSettings");
 
@@ -34,6 +34,7 @@ public class SettingController {
 
         customerSettings.addObject("user", user);
         customerSettings.addObject("customerInfo", customerInfo);
+        customerSettings.addObject("customerName" , customerInfo.getName());
 
         return customerSettings;
     }
@@ -44,7 +45,7 @@ public class SettingController {
                               @RequestParam("phone") String phone, @RequestParam("companyName") String companyName,
                               @RequestParam("companySite") String companySite) {
 
-        long userId = (Integer) httpSession.getAttribute("UserId");
+        Long userId = (Long) httpSession.getAttribute("UserId");
         CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
 
         customerInfo.setName(recipientName);

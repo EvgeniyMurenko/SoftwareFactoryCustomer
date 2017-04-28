@@ -129,8 +129,13 @@
                 </div>
             <%} else {%>
                 <div class="message-manager-informer">
-                    <% %>
-                    <div class="mi-m-title"><% out.print(managerInfo.getName()); %> <a href="javascript:void(0);"><%
+                    <%String managerName;
+                    if (managerInfo == null){
+                            managerName = "SoFac Team";
+                        }else {
+                        managerName = managerInfo.getName();
+                    }%>
+                    <div class="mi-m-title"><% out.print(managerName); %> <a href="javascript:void(0);"><%
                         out.print("(ID " + message.getId() + ")"); %></a> <span class="mi-m-time pull-right"><%
                         out.print(dateFormatShow.format(message.getMessageTime())); %></span></div>
                     <div class="mi-m-message">
