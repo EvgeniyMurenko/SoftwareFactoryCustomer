@@ -270,9 +270,7 @@ public class CustomerCabinetController {
 
         //PUT OBJECTS TO MODEL
         caseChat.addObject("messagesSorted", messagesSorted);
-        caseChat.addObject("caseId", id);
         caseChat.addObject("case", aCase);
-        caseChat.addObject("caseStatus" , aCase.getStatus());
         caseChat.addObject("managerInfo" , managerInfoService.getManagerInfoById(aCase.getUserManagerId()));
         return caseChat;
     }

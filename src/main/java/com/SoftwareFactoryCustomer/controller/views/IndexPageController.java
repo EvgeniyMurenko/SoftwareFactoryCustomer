@@ -37,21 +37,21 @@ public class IndexPageController {
     EstimateService estimateService;
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess ,
-                                  @RequestParam(value = "isGenerateCustomerIdSuccess" , required=false) Boolean isGenerateSuccess ,
-                                  @RequestParam(value ="isSessionExpired" , required = false) Boolean isSessionExpired ) {
+    public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess,
+                                  @RequestParam(value = "isGenerateCustomerIdSuccess", required = false) Boolean isGenerateSuccess,
+                                  @RequestParam(value = "isSessionExpired", required = false) Boolean isSessionExpired) {
 
         if (isCurrentAuthenticationAnonymous()) {
             ModelAndView mainPage = new ModelAndView("index");
 
-            if (isEstimateSuccess != null){
-                mainPage.addObject("isEstimateSuccess" , isEstimateSuccess);
+            if (isEstimateSuccess != null) {
+                mainPage.addObject("isEstimateSuccess", isEstimateSuccess);
             }
-            if (isGenerateSuccess !=null){
-                mainPage.addObject("isGenerateCustomerIdSuccess" , isGenerateSuccess);
+            if (isGenerateSuccess != null) {
+                mainPage.addObject("isGenerateCustomerIdSuccess", isGenerateSuccess);
             }
-            if (isSessionExpired !=null){
-                mainPage.addObject("isSessionExpired" , isSessionExpired);
+            if (isSessionExpired != null) {
+                mainPage.addObject("isSessionExpired", isSessionExpired);
             }
 
             ArrayList<Estimate> estimateUnsorted = (ArrayList<Estimate>) estimateService.getAllEstimates();
@@ -59,7 +59,7 @@ public class IndexPageController {
             Collections.sort(estimateUnsorted, new EstimateByDateComparator());
 
             ArrayList<Estimate> estimatesSorted = getSixEstimatesFromArray(estimateUnsorted);
-            mainPage.addObject("estimates" ,estimatesSorted );
+            mainPage.addObject("estimates", estimatesSorted);
             return mainPage;
         } else {
             ModelAndView modelAndView = new ModelAndView("redirect:/list");
@@ -72,17 +72,19 @@ public class IndexPageController {
     MailService mailService;
 
     @RequestMapping(value = "/estimate", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView estimateWindow(@RequestParam("name") String recipientName, @RequestParam("email") String recipientMail, @RequestParam("phone") String phone,
-                                                     @RequestParam("message") String recipientRequestText, @RequestParam(value = "price_request", required = false) boolean priceRequest,
-                                                     @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
-                                                     @RequestParam("fileEstimate[]") MultipartFile[] files) {
+    public
+    @ResponseBody
+    ModelAndView estimateWindow(@RequestParam("name") String recipientName, @RequestParam("email") String recipientMail, @RequestParam("phone") String phone,
+                                @RequestParam("message") String recipientRequestText, @RequestParam(value = "price_request", required = false) boolean priceRequest,
+                                @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
+                                @RequestParam("fileEstimate[]") MultipartFile[] files) {
 
 
         System.out.println("name " + recipientName + " email " + recipientMail + " text "
                 + recipientRequestText + "phone" + phone);
 
         System.out.println("========================START ESTIMATE CREATE");
-        System.out.println("========================ESTIMATE NAME: "+ recipientName);
+        System.out.println("========================ESTIMATE NAME: " + recipientName);
 
 
         // CREATE ESTIMATE
@@ -101,20 +103,20 @@ public class IndexPageController {
 
 
         //GENERATE SPECIAL ESTIMATE ID
-        String generatedEstimateId = generateEstimateId(estimate.getDateRequest() , estimate.getId());
+        String generatedEstimateId = generateEstimateId(estimate.getDateRequest(), estimate.getId());
         estimate.setEstimateGeneratedId(generatedEstimateId);
 
         estimateService.updateEstimate(estimate);
 
         //GENERATE CUSTOMER INFO ACCOUNT
-        CustomerInfo customerInfo =  generateCustomerInfo( phone , recipientMail , recipientName);
+        CustomerInfo customerInfo = generateCustomerInfo(phone, recipientMail, recipientName);
 
         //GENERATE REQUEST ID LINK FOR REGISTRATION
         String registrationLink = "www.sofac.kr/requestId/";
-        registrationLink = registrationLink + customerInfo.getUser().getId() + "/" +generatedEstimateId +"/" + estimate.getId()  ;
+        registrationLink = registrationLink + customerInfo.getUser().getId() + "/" + generatedEstimateId + "/" + estimate.getId();
 
         //SEND EMAIL TO CUSTOMER WITH DETAILS
-        mailService.sendEmailAfterEstimate(generatedEstimateId, registrationLink , recipientMail);
+        mailService.sendEmailAfterEstimate(generatedEstimateId, registrationLink, recipientMail);
 
         //Save to file
 
@@ -135,21 +137,21 @@ public class IndexPageController {
     }
 
     @RequestMapping(value = "/requestId/{userId}/{generatedEstimateId}/{estimateId}", method = RequestMethod.GET)
-    public ModelAndView requestIdShowPage(@PathVariable Long userId ,
-                                          @PathVariable Long generatedEstimateId ,
-                                          @PathVariable Long estimateId){
+    public ModelAndView requestIdShowPage(@PathVariable Long userId,
+                                          @PathVariable Long generatedEstimateId,
+                                          @PathVariable Long estimateId) {
 
         User user = userService.findById(userId);
 
-        if (user == null || user.isFullCreated()){
+        if (user == null || user.isFullCreated()) {
             return new ModelAndView("redirect:/main");
         }
 
         ModelAndView requestIdPage = new ModelAndView("/requestId");
 
         Estimate estimate = estimateService.getEstimateById(estimateId);
-        requestIdPage.addObject("CustomerEstimate" , estimate);
-        requestIdPage.addObject("User" , user);
+        requestIdPage.addObject("CustomerEstimate", estimate);
+        requestIdPage.addObject("User", user);
 
         return requestIdPage;
     }
@@ -161,15 +163,15 @@ public class IndexPageController {
     CustomerInfoService customerInfoService;
 
     @RequestMapping(value = "/generateCustomerId", method = RequestMethod.POST)
-    public ModelAndView requestIdCreateAccount(@RequestParam("userId") Long userId , @RequestParam("name") String name, @RequestParam("email") String email,
-                                               @RequestParam("phone") String phone , @RequestParam("companyName") String companyName, @RequestParam("companySite") String companySite){
+    public ModelAndView requestIdCreateAccount(@RequestParam("userId") Long userId, @RequestParam("name") String name, @RequestParam("email") String email,
+                                               @RequestParam("phone") String phone, @RequestParam("companyName") String companyName, @RequestParam("companySite") String companySite) {
 
         ModelAndView main = new ModelAndView("redirect:/main");
 
-        String password = phone.replace(" " , "");
-        password = password.replace(")" ,"");
-        password = password.replace("(" , "");
-        password = password.replace("-" ,"");
+        String password = phone.replace(" ", "");
+        password = password.replace(")", "");
+        password = password.replace("(", "");
+        password = password.replace("-", "");
 
         //UPDATE USER PASSWORD RELATED TO CUSTOMER
         User user = userService.findById(userId);
@@ -190,17 +192,17 @@ public class IndexPageController {
 
 
         //SEND INFORMATION TO CUSTOMER
-        mailService.sendEmailAfterRegistration(password , user.getSsoId() , email , name);
+        mailService.sendEmailAfterRegistration(password, user.getSsoId(), email, name);
 
-        main.addObject("isGenerateCustomerIdSuccess" , new Boolean(true));
+        main.addObject("isGenerateCustomerIdSuccess", new Boolean(true));
         return main;
     }
 
     @RequestMapping(value = "/session_expired", method = RequestMethod.POST)
-    public ModelAndView sessionExpired( ){
+    public ModelAndView sessionExpired() {
         ModelAndView modelAndView = new ModelAndView("redirect:/main");
 
-        modelAndView.addObject("isSessionExpired" , new Boolean(true));
+        modelAndView.addObject("isSessionExpired", new Boolean(true));
 
         return modelAndView;
     }
@@ -232,20 +234,20 @@ public class IndexPageController {
         return estimateToShow;
     }
 
-    private String generateEstimateId(Date currentDate , long id) {
+    private String generateEstimateId(Date currentDate, long id) {
 
         java.sql.Date date = new java.sql.Date(currentDate.getTime());
 
         String dateWithoutHours = date.toString();
-        dateWithoutHours = dateWithoutHours.substring(2 ,10);
-        dateWithoutHours = dateWithoutHours.replaceAll("-","");
+        dateWithoutHours = dateWithoutHours.substring(2, 10);
+        dateWithoutHours = dateWithoutHours.replaceAll("-", "");
 
         String stringId = Long.toString(id);
 
         String generatedEstimateId = "";
-        if (stringId.length() <= 4){
+        if (stringId.length() <= 4) {
             String zero = "";
-            for (int i = 0; i < 4-stringId.length(); i++){
+            for (int i = 0; i < 4 - stringId.length(); i++) {
                 zero = zero + "0";
                 System.out.println("1");
             }
@@ -258,14 +260,14 @@ public class IndexPageController {
     }
 
 
-    private CustomerInfo generateCustomerInfo(String phone , String recipientMail , String recipientName ){
+    private CustomerInfo generateCustomerInfo(String phone, String recipientMail, String recipientName) {
 
         // CREATE CUSTOMER USER
         User userAfterSave = userService.createCustomerUser(phone);
 
 
         //CREATE FINAL NEW CUSTOMER
-        CustomerInfo customerInfo = new CustomerInfo(userAfterSave, recipientName, "", phone, recipientMail, "" , new HashSet<>());
+        CustomerInfo customerInfo = new CustomerInfo(userAfterSave, recipientName, "", phone, recipientMail, "", new HashSet<>());
         customerInfo.setId(userAfterSave.getId());
         customerInfoService.addNewCustomerInfo(customerInfo);
         CustomerInfo customerInfoCreated = customerInfoService.getCustomerInfoById(userAfterSave.getId());
