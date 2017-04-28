@@ -10,6 +10,17 @@ public class CustomerInfo {
     public CustomerInfo() {
     }
 
+    public CustomerInfo(User user, String name, String company, String phone, String email, String website, boolean isFullCreated, Set<Project> projects) {
+        this.user = user;
+        this.name = name;
+        this.company = company;
+        this.phone = phone;
+        this.email = email;
+        this.website = website;
+        this.isFullCreated = isFullCreated;
+        this.projects = projects;
+    }
+
     @Id
     @Column(name = "user_id", nullable = false)
     private Long id;
@@ -38,6 +49,10 @@ public class CustomerInfo {
 
     @Column(name="web_site")
     private String website;
+
+
+    @Column(name="is_full_created")
+    private boolean isFullCreated;
 
 
     @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -108,15 +123,12 @@ public class CustomerInfo {
         this.website = website;
     }
 
+    public boolean isFullCreated() {
+        return isFullCreated;
+    }
 
-    public CustomerInfo(User user, String name, String company, String phone, String email, String website, Set<Project> projects) {
-        this.user = user;
-        this.name = name;
-        this.company = company;
-        this.phone = phone;
-        this.email = email;
-        this.website = website;
-        this.projects = projects;
+    public void setFullCreated(boolean fullCreated) {
+        isFullCreated = fullCreated;
     }
 }
 

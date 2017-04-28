@@ -142,8 +142,9 @@ public class IndexPageController {
                                           @PathVariable Long estimateId) {
 
         User user = userService.findById(userId);
+        CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
 
-        if (user == null || user.isFullCreated()) {
+        if (user == null || customerInfo.isFullCreated()) {
             return new ModelAndView("redirect:/main");
         }
 
@@ -176,7 +177,6 @@ public class IndexPageController {
         //UPDATE USER PASSWORD RELATED TO CUSTOMER
         User user = userService.findById(userId);
         user.setPassword(password);
-        user.setFullCreated(true);
         userService.updateUser(user);
 
         //UPDATE CUSTOMER INFO AFTER FULL REGISTRATION
@@ -187,7 +187,7 @@ public class IndexPageController {
         customerInfo.setPhone(phone);
         customerInfo.setCompany(companyName);
         customerInfo.setWebsite(companySite);
-
+        customerInfo.setFullCreated(true);
         customerInfoService.updateCustomerInfo(customerInfo);
 
 
@@ -267,7 +267,7 @@ public class IndexPageController {
 
 
         //CREATE FINAL NEW CUSTOMER
-        CustomerInfo customerInfo = new CustomerInfo(userAfterSave, recipientName, "", phone, recipientMail, "", new HashSet<>());
+        CustomerInfo customerInfo = new CustomerInfo(userAfterSave, recipientName, "", phone, recipientMail, "" , false, new HashSet<>());
         customerInfo.setId(userAfterSave.getId());
         customerInfoService.addNewCustomerInfo(customerInfo);
         CustomerInfo customerInfoCreated = customerInfoService.getCustomerInfoById(userAfterSave.getId());
