@@ -59,6 +59,10 @@ public class CustomerInfo {
     private Set<Project> projects;
 
 
+    @Column(name = "is_standard_account")
+    private boolean isStandardAccount;
+
+
     public User getUser() {
         return user;
     }
@@ -129,6 +133,14 @@ public class CustomerInfo {
 
     public void setFullCreated(boolean fullCreated) {
         isFullCreated = fullCreated;
+    }
+
+    public boolean isStandardAccount() {
+        return isStandardAccount;
+    }
+
+    public void setStandardAccount(boolean standardAccount) {
+        isStandardAccount = standardAccount;
     }
 }
 
