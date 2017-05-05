@@ -6,6 +6,7 @@
 <%@ page session="false" %>
 <!-- JQuery -->
 <script src="/resources/baseStyle/jquery/jquery.min.js"></script>
+<script src="/resources/baseStyle/jquery/promise.min.js"></script>
 <script src="/resources/baseStyle/jquery/jquery-ui.min.js"></script>
 <script src="/resources/baseStyle/jquery/jquery.mousewheel.min.js"></script>
 <script src="/resources/baseStyle/jquery/jquery.fancybox.min.js"></script>

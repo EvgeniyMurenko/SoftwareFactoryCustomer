@@ -120,8 +120,8 @@
                             Set<MessageLink> messageLinks = message.getMessageLinks();
                             if (!messageLinks.isEmpty()) {
 
-                                for (MessageLink messageLink : messageLinks) {
-                                    out.print("<br><a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a>");
+                                for (MessageLink messageLink : messageLinks){
+                                    out.print("<p><a href="+ messageLink.getFileLink() +" target='_blank'>"+messageLink.getFileName()+"</a>");
                                 }
                             }
                         %>
@@ -143,8 +143,8 @@
                         <% Set<MessageLink> messageLinks = message.getMessageLinks();
                             if (!messageLinks.isEmpty()) {
 
-                                for (MessageLink messageLink : messageLinks) {
-                                    out.print("<br><a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a>");
+                                for (MessageLink messageLink : messageLinks){
+                                    out.print("<p><a href="+ messageLink.getFileLink() +" target='_blank'>"+messageLink.getFileName()+"</a>");
                                 }
                             }
                         %>
