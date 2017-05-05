@@ -121,7 +121,7 @@
                             if (!messageLinks.isEmpty()) {
 
                                 for (MessageLink messageLink : messageLinks) {
-                                    out.print("<a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a><br>");
+                                    out.print("<br><a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a>");
                                 }
                             }
                         %>
@@ -144,7 +144,7 @@
                             if (!messageLinks.isEmpty()) {
 
                                 for (MessageLink messageLink : messageLinks) {
-                                    out.print("<a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a><br>");
+                                    out.print("<br><a href=" + messageLink.getFileLink() + ">" + messageLink.getFileName() + "</a>");
                                 }
                             }
                         %>

@@ -50,7 +50,7 @@ public class CustomerCabinetController {
 
         ModelAndView customerCabinet = new ModelAndView("customerAdminViews/customerCabinet");
 
-        Set<Project> projectsToShow = addGeneralDataToMAVAndReturnProjects(customerCabinet , httpSession);
+        Set<Project> projectsToShow = addGeneralDataToMAVAndReturnProjects(customerCabinet, httpSession);
         ArrayList<Case> casesToShow = new ArrayList<>();
 
         if (projectsToShow != null) {
@@ -67,14 +67,14 @@ public class CustomerCabinetController {
         Collections.sort(casesToShow, new CaseByStatusAndDateComparator());
 
         //PUT OBJECTS TO MODEL
-        customerCabinet.addObject("currentProjectCasesName" , "All Cases");
+        customerCabinet.addObject("currentProjectCasesName", "All Cases");
         customerCabinet.addObject("cases", casesToShow);
 
         return customerCabinet;
     }
 
     @RequestMapping(value = "/newCase", method = RequestMethod.GET)
-    public ModelAndView newCase(HttpSession httpSession ) {
+    public ModelAndView newCase(HttpSession httpSession) {
 
         ModelAndView customerCabinet = new ModelAndView("customerAdminViews/customerCase");
 
@@ -87,7 +87,7 @@ public class CustomerCabinetController {
         Collections.sort(sortedProjectListToShow, new ProjectByDateComparator());
 
         //PUT OBJECTS TO MODEL
-        customerCabinet.addObject("customerName" , customerInfo.getName());
+        customerCabinet.addObject("customerName", customerInfo.getName());
         customerCabinet.addObject("projects", sortedProjectListToShow);
 
         return customerCabinet;
@@ -98,7 +98,7 @@ public class CustomerCabinetController {
                                    @RequestParam("caseName") String caseName,
                                    @RequestParam("message") String message, @RequestParam("language") String language,
                                    @RequestParam("fileCase[]") MultipartFile[] files,
-                                   @RequestParam(value = "emergency", required = false) boolean emergency){
+                                   @RequestParam(value = "emergency", required = false) boolean emergency) {
 
         System.out.print(projectName + " " + " " + caseName + " " + message + " " + " " + language);
 
@@ -109,11 +109,11 @@ public class CustomerCabinetController {
         Set<Project> projects = customerInfo.getProjects();
 
         Project project = null;
-        if (projects != null){
+        if (projects != null) {
             Iterator<Project> itr = projects.iterator();
             while (itr.hasNext()) {
                 project = itr.next();
-                if(project.getProjectName().equals(projectName)){
+                if (project.getProjectName().equals(projectName)) {
                     break;
                 }
             }
@@ -160,10 +160,10 @@ public class CustomerCabinetController {
     }
 
 
-    @RequestMapping (value = "/case/{id}/print_message", method = RequestMethod.POST)
-    public ModelAndView casePrintMessageController( @PathVariable Long id, @RequestParam("message") String messageText,
-                                                    @RequestParam("file[]") MultipartFile[]  files, HttpSession httpSession,
-                                                    @RequestParam(value = "emergency", required = false) boolean emergency){
+    @RequestMapping(value = "/case/{id}/print_message", method = RequestMethod.POST)
+    public ModelAndView casePrintMessageController(@PathVariable Long id, @RequestParam("message") String messageText,
+                                                   @RequestParam("file[]") MultipartFile[] files, HttpSession httpSession,
+                                                   @RequestParam(value = "emergency", required = false) boolean emergency) {
 
         // GET
         Case aCase = caseService.getCaseById(id);
@@ -183,17 +183,19 @@ public class CustomerCabinetController {
         messageService.addNewMessage(message);
 
 
-
         // SAVE MESSAGE TO CASE
-        Set <Message> messages = aCase.getMessages();
+        Set<Message> messages = aCase.getMessages();
         messages.add(message);
         aCase.setMessages(messages);
 
 
         //SAVE FILE
-        SaveFile saveFile = new SaveFile(files);
-        saveFile.saveMessageFilesToMessage(message);
-        messageService.updateMessage(message);
+
+            SaveFile saveFile = new SaveFile(files);
+            saveFile.saveMessageFilesToMessage(message);
+            messageService.updateMessage(message);
+
+
 
         caseService.updateCase(aCase);
 
@@ -203,8 +205,8 @@ public class CustomerCabinetController {
         return new ModelAndView(redirectLink);
     }
 
-    @RequestMapping (value = "/case/{id}/close_case", method = RequestMethod.POST)
-    public ModelAndView caseCloseController( @PathVariable Long id) {
+    @RequestMapping(value = "/case/{id}/close_case", method = RequestMethod.POST)
+    public ModelAndView caseCloseController(@PathVariable Long id) {
 
         Case caseToClose = caseService.getCaseById(id);
         caseToClose.setStatus(StatusEnum.CLOSE.toString());
@@ -255,7 +257,7 @@ public class CustomerCabinetController {
 
         ModelAndView caseChat = new ModelAndView("customerAdminViews/customerChat");
 
-        addGeneralDataToMAVAndReturnProjects(caseChat , httpSession);
+        addGeneralDataToMAVAndReturnProjects(caseChat, httpSession);
 
 
         // GET MESSAGE FROM CASE BY ID
@@ -271,12 +273,12 @@ public class CustomerCabinetController {
         //PUT OBJECTS TO MODEL
         caseChat.addObject("messagesSorted", messagesSorted);
         caseChat.addObject("case", aCase);
-        caseChat.addObject("managerInfo" , managerInfoService.getManagerInfoById(aCase.getUserManagerId()));
+        caseChat.addObject("managerInfo", managerInfoService.getManagerInfoById(aCase.getUserManagerId()));
         return caseChat;
     }
 
-    @RequestMapping (value = "/case/{id}/answer", method = RequestMethod.GET)
-    public ModelAndView caseAnswerController( @PathVariable Long id) {
+    @RequestMapping(value = "/case/{id}/answer", method = RequestMethod.GET)
+    public ModelAndView caseAnswerController(@PathVariable Long id) {
 
         ModelAndView caseAnswerChat = new ModelAndView("customerAdminViews/customerChatAnswer");
 
@@ -284,14 +286,14 @@ public class CustomerCabinetController {
         Set<Message> messages = aCase.getMessages();
 
         caseAnswerChat.addObject("caseId", id);
-        caseAnswerChat.addObject("case" , aCase);
-        caseAnswerChat.addObject("messages" , messages);
+        caseAnswerChat.addObject("case", aCase);
+        caseAnswerChat.addObject("messages", messages);
 
         return caseAnswerChat;
     }
 
     //ADD GENERAL OBJECT THAT PERSIST IN ALL JSP
-    private Set<Project>  addGeneralDataToMAVAndReturnProjects(ModelAndView modelAndView , HttpSession httpSession){
+    private Set<Project> addGeneralDataToMAVAndReturnProjects(ModelAndView modelAndView, HttpSession httpSession) {
 
         Long userId = (Long) httpSession.getAttribute("UserId");
         CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(userId);
@@ -304,7 +306,7 @@ public class CustomerCabinetController {
         Collections.sort(sortedProjectListToShow, new ProjectByDateComparator());
 
         //PUT OBJECTS TO MODEL
-        modelAndView.addObject("customerName" , customerName);
+        modelAndView.addObject("customerName", customerName);
         modelAndView.addObject("projects", sortedProjectListToShow);
 
         return projectsToShow;
