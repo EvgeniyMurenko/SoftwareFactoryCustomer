@@ -6,6 +6,7 @@ import com.SoftwareFactoryCustomer.constant.MainPathEnum;
 import com.SoftwareFactoryCustomer.constant.ProjectEnum;
 import com.SoftwareFactoryCustomer.constant.StatusEnum;
 import com.SoftwareFactoryCustomer.model.*;
+import com.SoftwareFactoryCustomer.util.AppMethods;
 import com.SoftwareFactoryCustomer.util.SaveFile;
 import com.SoftwareFactoryCustomer.service.CustomerInfoService;
 import com.SoftwareFactoryCustomer.service.EstimateService;
@@ -95,7 +96,7 @@ public class IndexPageController {
         estimate.setEmail(recipientMail);
         estimate.setPhone(phone);
         estimate.setPriceRequest(priceRequest);
-        estimate.setEstimateRequest(recipientRequestText);
+        estimate.setEstimateRequest(AppMethods.nl2br(recipientRequestText));
         estimate.setQuestionRequest(questionRequest);
         estimate.setDateRequest(new Date());
         estimate.setEstimateLinks(new HashSet<>());

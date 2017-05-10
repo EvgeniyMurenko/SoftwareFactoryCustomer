@@ -11,6 +11,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -36,7 +38,7 @@ public class SaveFile {
 
         pathForSaveFile = MainPathEnum.mainPath + "/notice/";
 
-        Set<NoticeLink> noticeLinks = notice.getNoticeLinks();
+        List<NoticeLink> noticeLinks = notice.getNoticeLinks();
 
         for (MultipartFile file : this.files) {
             try {

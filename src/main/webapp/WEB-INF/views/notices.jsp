@@ -3,6 +3,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.SoftwareFactoryCustomer.model.NoticeLink" %>
 <%@ page import="java.util.Set" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -54,7 +55,7 @@
                 <div class="notice-box-information other-font2" id="<%out.print("box_notice_"+notice.getId());%>" style="display: none; color: #000;">
                     <%out.print(notice.getNoticeText());%>
                     <%
-                        Set<NoticeLink> noticeLinks = notice.getNoticeLinks();
+                        List<NoticeLink> noticeLinks = notice.getNoticeLinks();
                         if (!noticeLinks.isEmpty()) {
 
 
@@ -63,11 +64,6 @@
 
                                             <img src="<%out.print(noticeLink.getFileLink());%>"
                                                  alt="<%out.print(noticeLink.getFileName());%>" class="img-responsive mb10">
-
-
-
-
-
 
 
                 <%              }
