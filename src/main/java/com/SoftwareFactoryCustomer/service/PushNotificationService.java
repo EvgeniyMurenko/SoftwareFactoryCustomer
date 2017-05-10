@@ -1,19 +1,26 @@
 package com.SoftwareFactoryCustomer.service;
 
 import com.google.android.gcm.server.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class NotificationService {
+public class PushNotificationService {
 
     /**
      * keys is the id which android app will give to server (one time)
      **/
 
-    public boolean pushNotificationToGCM(List<String> keys, String message , String title){
+    @Autowired
+    GoogleCloudKeyService googleCloudKeyService;
+
+    public boolean pushNotificationToGCM(String message , String title){
+
+        List<String> keys = googleCloudKeyService.getAllStringKeys();
 
         final String GCM_API_KEY = "AAAA6kxQc60:APA91bHuM7g4FlPb7jxjoB-Fj3frfpgSzZ962WZWjy7MOxKNYdqW2zYQM0ST_c9HNC1-zpknSzoQVMyvTjvz82x2bD71PEs4mUmHiQn140TzSjNzBmInN3BVMUdby1dlRIYovnkxnSJ6";
         final int retries = 3;

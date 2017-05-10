@@ -43,6 +43,9 @@ public class CustomerCabinetController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    PushNotificationService pushNotificationService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView getCustomerCabinet(HttpSession httpSession) {
 
@@ -154,6 +157,7 @@ public class CustomerCabinetController {
         saveFile.saveMessageFilesToMessage(caseMessage);
         messageService.updateMessage(caseMessage);
 
+        pushNotificationService.pushNotificationToGCM(message , MessageEnum.CASE.toString());
 
         ModelAndView modelAndView = new ModelAndView("redirect:/list");
         return modelAndView;
@@ -202,6 +206,8 @@ public class CustomerCabinetController {
         // REDIRECT TO CHAT
         String redirectLink = "redirect:/cabinet/case/" + id;
 
+        pushNotificationService.pushNotificationToGCM(messageText , MessageEnum.MESSAGE.toString());
+
         return new ModelAndView(redirectLink);
     }
 
@@ -209,48 +215,18 @@ public class CustomerCabinetController {
     public ModelAndView caseCloseController(@PathVariable Long id) {
 
         Case caseToClose = caseService.getCaseById(id);
+
+        Long userId = caseToClose.getUserManagerId();
+
         caseToClose.setStatus(StatusEnum.CLOSE.toString());
         caseService.updateCase(caseToClose);
+
+
+        pushNotificationService.pushNotificationToGCM(userId.toString() , MessageEnum.CLOSE_CASE.toString());
 
         return new ModelAndView("redirect:/cabinet/");
     }
 
-
-
-
-   /* @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
-    public ModelAndView getProjectCases(@PathVariable Long id, HttpSession httpSession) {
-
-        // GET CASES FROM PROJECT BY ID
-        ModelAndView customerCabinetShowOneProject = new ModelAndView("customerAdminView/customerCabinet");
-
-        addGeneralDataToMAVAndReturnProjects(customerCabinetShowOneProject , httpSession);
-
-        ArrayList<Case> casesToShow = new ArrayList<>();
-
-        Project project = projectService.getProjectById(id);
-        getCasesFromProject(project, casesToShow);
-
-        //SORT PROJECT & CASE
-        Collections.sort(casesToShow, new CaseByStatusAndDateComparator());
-
-
-        //GET PROJECT NAME
-        String projectName = "";
-        if (project.getProjectName().equals("#$GENERAL")){
-            projectName = "Discussion Room";
-        } else {
-            projectName = project.getProjectName();
-        }
-
-        //PUT OBJECTS TO MODEL
-
-        customerCabinetShowOneProject.addObject("currentProjectCasesName" , projectName);
-        customerCabinetShowOneProject.addObject("projectId" , Long.toString(project.getId()));
-        customerCabinetShowOneProject.addObject("cases", casesToShow);
-
-        return customerCabinetShowOneProject;
-    }*/
 
     @RequestMapping(value = "/case/{id}", method = RequestMethod.GET)
     public ModelAndView caseChatController(@PathVariable Long id, HttpSession httpSession) {
@@ -325,4 +301,41 @@ public class CustomerCabinetController {
             }
         }
     }
+
+
+   /* @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
+    public ModelAndView getProjectCases(@PathVariable Long id, HttpSession httpSession) {
+
+        // GET CASES FROM PROJECT BY ID
+        ModelAndView customerCabinetShowOneProject = new ModelAndView("customerAdminView/customerCabinet");
+
+        addGeneralDataToMAVAndReturnProjects(customerCabinetShowOneProject , httpSession);
+
+        ArrayList<Case> casesToShow = new ArrayList<>();
+
+        Project project = projectService.getProjectById(id);
+        getCasesFromProject(project, casesToShow);
+
+        //SORT PROJECT & CASE
+        Collections.sort(casesToShow, new CaseByStatusAndDateComparator());
+
+
+        //GET PROJECT NAME
+        String projectName = "";
+        if (project.getProjectName().equals("#$GENERAL")){
+            projectName = "Discussion Room";
+        } else {
+            projectName = project.getProjectName();
+        }
+
+        //PUT OBJECTS TO MODEL
+
+        customerCabinetShowOneProject.addObject("currentProjectCasesName" , projectName);
+        customerCabinetShowOneProject.addObject("projectId" , Long.toString(project.getId()));
+        customerCabinetShowOneProject.addObject("cases", casesToShow);
+
+        return customerCabinetShowOneProject;
+    }*/
+
+
 }

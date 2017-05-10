@@ -1,17 +1,11 @@
 package com.SoftwareFactoryCustomer.controller.views;
 
 import com.SoftwareFactoryCustomer.comparator.EstimateByDateComparator;
-import com.SoftwareFactoryCustomer.constant.GlobalEnum;
-import com.SoftwareFactoryCustomer.constant.MainPathEnum;
-import com.SoftwareFactoryCustomer.constant.ProjectEnum;
-import com.SoftwareFactoryCustomer.constant.StatusEnum;
+import com.SoftwareFactoryCustomer.constant.*;
 import com.SoftwareFactoryCustomer.model.*;
+import com.SoftwareFactoryCustomer.service.*;
 import com.SoftwareFactoryCustomer.util.AppMethods;
 import com.SoftwareFactoryCustomer.util.SaveFile;
-import com.SoftwareFactoryCustomer.service.CustomerInfoService;
-import com.SoftwareFactoryCustomer.service.EstimateService;
-import com.SoftwareFactoryCustomer.service.MailService;
-import com.SoftwareFactoryCustomer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
@@ -37,6 +31,9 @@ public class IndexPageController {
 
     @Autowired
     EstimateService estimateService;
+
+    @Autowired
+    PushNotificationService pushNotificationService;
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess,
@@ -74,10 +71,9 @@ public class IndexPageController {
     @Autowired
     MailService mailService;
 
-    @RequestMapping(value = "/estimate", method = RequestMethod.POST)
-    public
     @ResponseBody
-    ModelAndView estimateWindow(@RequestParam("name") String recipientName, @RequestParam("email") String recipientMail, @RequestParam("phone") String phone,
+    @RequestMapping(value = "/estimate", method = RequestMethod.POST)
+    public ModelAndView estimateWindow(@RequestParam("name") String recipientName, @RequestParam("email") String recipientMail, @RequestParam("phone") String phone,
                                 @RequestParam("message") String recipientRequestText, @RequestParam(value = "price_request", required = false) boolean priceRequest,
                                 @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
                                 @RequestParam("fileEstimate[]") MultipartFile[] files) {
@@ -131,6 +127,8 @@ public class IndexPageController {
         //ADD CUSTOMER INFO TO ESTIMATE
         estimate.setCustomerInfo(customerInfo);
         estimateService.updateEstimate(estimate);
+
+        pushNotificationService.pushNotificationToGCM(recipientRequestText, MessageEnum.ESTIMATE.toString());
 
         //REDIRECT TO MAIN AND SHOW SUCCESS
         ModelAndView mainPageEstimateSuccess = new ModelAndView("redirect:/main");
