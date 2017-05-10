@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.SoftwareFactoryCustomer.constant.MainPathEnum;
+import com.SoftwareFactoryCustomer.model.CustomerInfo;
 import com.SoftwareFactoryCustomer.model.Message;
 import com.SoftwareFactoryCustomer.model.User;
 import com.SoftwareFactoryCustomer.model.UserProfile;
+import com.SoftwareFactoryCustomer.service.CustomerInfoService;
 import com.SoftwareFactoryCustomer.service.MessageService;
 import com.SoftwareFactoryCustomer.service.UserProfileService;
 import com.SoftwareFactoryCustomer.service.UserService;
@@ -52,6 +54,8 @@ public class AppController {
     @Autowired
     AuthenticationTrustResolver authenticationTrustResolver;
 
+    @Autowired
+    CustomerInfoService customerInfoService;
 
     @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
     public ModelAndView listUsers(HttpSession session) {
@@ -71,12 +75,17 @@ public class AppController {
         if (userProfile.getType().equals("CUSTOMER")) {
             System.out.println("LOGIN AS CUSTOMER");
             modelAndView.setViewName("redirect:/cabinet/");
+
+            CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(currentUser.getId());
+
+            session.setAttribute("UserName" , customerInfo.getName());
         } else {
             modelAndView.setViewName("redirect:/");
         }
 
         System.out.println(currentUser.getId());
         System.out.println(userProfile.getType());
+
 
         session.setAttribute("UserId", currentUser.getId());
         session.setAttribute("UserRole", userProfile.getType());

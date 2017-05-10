@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.Date;
 
@@ -39,9 +40,10 @@ public class IndexPageController {
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess,
                                   @RequestParam(value = "isGenerateCustomerIdSuccess", required = false) Boolean isGenerateSuccess,
-                                  @RequestParam(value = "isSessionExpired", required = false) Boolean isSessionExpired) {
+                                  @RequestParam(value = "isSessionExpired", required = false) Boolean isSessionExpired,
+                                  HttpSession httpSession) {
 
-        if (isCurrentAuthenticationAnonymous()) {
+        if (isCurrentAuthenticationAnonymous() || httpSession.getAttribute("UserName") != null) {
             ModelAndView mainPage = new ModelAndView("index");
 
             if (isEstimateSuccess != null) {
