@@ -11,7 +11,7 @@
 <header class="container header">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 logo">
-            <a href="">소프트웨어<span>팩토리</span></a>
+            <a href="/main">소프트웨어<span>팩토리</span></a>
             <div class="small-logo">SoFAC : <i>Software Factory</i></div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 text-right login">
