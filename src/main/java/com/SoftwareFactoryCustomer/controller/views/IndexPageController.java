@@ -128,7 +128,7 @@ public class IndexPageController {
         estimate.setCustomerInfo(customerInfo);
         estimateService.updateEstimate(estimate);
 
-        pushNotificationService.pushNotificationToGCM(recipientRequestText, MessageEnum.ESTIMATE.toString());
+        pushNotificationService.pushNotificationToGCM(recipientRequestText, MessageEnum.ESTIMATE.toString()+" :: "+estimate.getName(), new Date());
 
         //REDIRECT TO MAIN AND SHOW SUCCESS
         ModelAndView mainPageEstimateSuccess = new ModelAndView("redirect:/main");

@@ -157,7 +157,7 @@ public class CustomerCabinetController {
         saveFile.saveMessageFilesToMessage(caseMessage);
         messageService.updateMessage(caseMessage);
 
-        pushNotificationService.pushNotificationToGCM(message , MessageEnum.CASE.toString());
+        pushNotificationService.pushNotificationToGCM(message , MessageEnum.CASE.toString()+" :: new Case "+newCase.getProjectTitle(), new Date());
 
         ModelAndView modelAndView = new ModelAndView("redirect:/list");
         return modelAndView;
@@ -206,7 +206,7 @@ public class CustomerCabinetController {
         // REDIRECT TO CHAT
         String redirectLink = "redirect:/cabinet/case/" + id;
 
-        pushNotificationService.pushNotificationToGCM(messageText , MessageEnum.MESSAGE.toString());
+        pushNotificationService.pushNotificationToGCM(messageText , MessageEnum.MESSAGE.toString()+" :: Case "+aCase.getProjectTitle(), new Date());
 
         return new ModelAndView(redirectLink);
     }
@@ -222,7 +222,7 @@ public class CustomerCabinetController {
         caseService.updateCase(caseToClose);
 
 
-        pushNotificationService.pushNotificationToGCM(userId.toString() , MessageEnum.CLOSE_CASE.toString());
+        pushNotificationService.pushNotificationToGCM(userId.toString() , MessageEnum.CLOSE_CASE.toString()+" :: "+caseToClose.getProjectTitle(), new Date());
 
         return new ModelAndView("redirect:/cabinet/");
     }

@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,7 +19,7 @@ public class PushNotificationService {
     @Autowired
     GoogleCloudKeyService googleCloudKeyService;
 
-    public boolean pushNotificationToGCM(String message , String title){
+    public boolean pushNotificationToGCM(String message , String title, Date data){
 
         List<String> keys = googleCloudKeyService.getAllStringKeys();
 
@@ -26,7 +27,10 @@ public class PushNotificationService {
         final int retries = 3;
         Sender sender = new Sender(GCM_API_KEY);
 
-        Message msg = new Message.Builder().collapseKey("gcm_message").delayWhileIdle(true).addData("message",message).addData("title" , title).build();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String dateString = dateFormat.format(data);
+
+        Message msg = new Message.Builder().collapseKey("gcm_message").delayWhileIdle(true).addData("message",message).addData("date", dateString).addData("title" , title).build();
 
         try {
 
