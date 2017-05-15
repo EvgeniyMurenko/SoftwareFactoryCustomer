@@ -33,7 +33,8 @@
                             class="fa fa-user"></i></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-menu-header text-center">설정</li>
-                        <li><a href="/cabinet/settings/"><i class="fa fa-user"></i> MY</a></li>
+                        <li><a href="/cabinet/"><i class="fa fa-user"></i> MY</a></li>
+                        <li><a href="/cabinet/settings/"><i class="fa fa-user"></i> Settings</a></li>
                         <li><a href="<c:url value="/logout" />"><i class="fa fa-lock"></i> 로그 아웃</a></li>
                     </ul>
                 </li>

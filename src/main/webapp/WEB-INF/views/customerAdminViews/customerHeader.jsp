@@ -15,7 +15,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 text-right login">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <span class="avatar-welcome"><%out.print((String) request.getAttribute("customerName"));%> 님 접속을 환영합니다.</span>
+                    <span class="avatar-welcome"><%out.print((String) request.getAttribute("customerName"));%> <a href="/cabinet/"> 님 접속을 환영합니다.</a>.</span>
                     <a href="javascript:void(0);" class="dropdown-toggle avatar" data-toggle="dropdown"><i
                             class="fa fa-user"></i></a>
                     <ul class="dropdown-menu">
