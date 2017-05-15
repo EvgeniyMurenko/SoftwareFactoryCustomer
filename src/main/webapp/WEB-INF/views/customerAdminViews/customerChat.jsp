@@ -48,7 +48,7 @@
               method="POST">
             <div class="col-md-6 text-right">
                 <a href="/cabinet/case/<%out.print(caseId); %>/answer"
-                   class="btn btn-primary btn-mobile">Write this CASE</a>
+                   class="btn btn-primary btn-mobile">이 CASE에 글쓰기</a>
 
 
                 <button type="button" class="btn btn-warning btn-mobile" data-toggle="modal" data-target="#myModal">

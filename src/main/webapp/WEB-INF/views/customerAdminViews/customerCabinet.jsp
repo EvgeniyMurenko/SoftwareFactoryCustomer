@@ -67,8 +67,7 @@
                     <!-- #End table pagination -->
 
                 </div>
-                <div class="col-md-6 text-right"><a href="<c:url value="/cabinet/newCase"/>" class="btn btn-primary">새 CASE
-                    생성</a></div>
+                <div class="col-md-6 text-right"><a href="<c:url value="/cabinet/newCase"/>" class="btn btn-primary">새로운 CASE 만들기</a></div>
             </div>
             <!-- Projects list table -->
             <table class="table table-striped">

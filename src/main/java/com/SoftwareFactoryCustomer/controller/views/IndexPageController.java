@@ -114,8 +114,10 @@ public class IndexPageController {
         String registrationLink = "www.sofac.kr/requestId/";
         registrationLink = registrationLink + customerInfo.getUser().getId() + "/" + generatedEstimateId + "/" + estimate.getId();
 
-        //SEND EMAIL TO CUSTOMER WITH DETAILS
-        mailService.sendEmailAfterEstimate(generatedEstimateId, registrationLink, recipientMail);
+
+        //send email by naver style
+        mailService.sendNaverMailAfterEstimate(generatedEstimateId, registrationLink, recipientMail);
+
 
         //Save to file
 
@@ -192,8 +194,8 @@ public class IndexPageController {
         customerInfoService.updateCustomerInfo(customerInfo);
 
 
-        //SEND INFORMATION TO CUSTOMER
-        mailService.sendEmailAfterRegistration(password, user.getSsoId(), email, name);
+        //SEND INFORMATION TO CUSTOMER by naver style
+        mailService.sendNaverMailAfterRegistration(password, user.getSsoId(), email, name);
 
         main.addObject("isGenerateCustomerIdSuccess", new Boolean(true));
         return main;

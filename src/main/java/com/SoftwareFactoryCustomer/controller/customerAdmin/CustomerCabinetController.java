@@ -264,6 +264,7 @@ public class CustomerCabinetController {
         caseAnswerChat.addObject("caseId", id);
         caseAnswerChat.addObject("case", aCase);
         caseAnswerChat.addObject("messages", messages);
+        caseAnswerChat.addObject("customerName", aCase.getProject().getCustomerInfo().getName());
 
         return caseAnswerChat;
     }
