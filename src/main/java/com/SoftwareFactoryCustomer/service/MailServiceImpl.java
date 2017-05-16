@@ -35,12 +35,12 @@ public class MailServiceImpl implements MailService {
                             "        <td style=\"height: 16px; font-family: Lucida Grande, Helvetica, Arial, sans-serif; -premailer-height: 16;\" height=\"16\"></td>\n" +
                             "    </tr>\n" +
                             "    <tr>\n" +
-                            "        <td style=\"width: 745px; -premailer-width: 685;\">\n" +
+                            "        <td style=\"width: 745px; !important; -premailer-width: 745;\">\n" +
                             "            <table class=\"iPhone_font\"\n" +
                             "                   style=\"padding: 0px; border: 0px currentColor; border-image: none; line-height: 18px; font-family: Lucida Grande, Helvetica, Arial, sans-serif; font-size: inherit;\">\n" +
                             "                <tbody>\n" +
                             "\t\t\t\t\t<tr>\t\t\t\t\t\t \n" +
-                            "\t\t\t\t\t\t<td style=\"width: 600px;\">\n" +
+                            "\t\t\t\t\t\t<td style=\"width: 745px;\">\n" +
                             "\t\t\t\t\t\t\t<!-- Header -->\n" +
                             "\t\t\t\t\t\t\t<div class=\"clearfix\" style=\"padding: 10px 0 15px 0; margin-bottom: 5px; \">\n" +
                             "\t\t\t\t\t\t\t\t<div style=\"float: left;\">\n" +
@@ -248,12 +248,12 @@ public class MailServiceImpl implements MailService {
                             "        <td style=\"height: 16px; font-family: Lucida Grande, Helvetica, Arial, sans-serif; -premailer-height: 16;\" height=\"16\"></td>\n" +
                             "    </tr>\n" +
                             "    <tr>\n" +
-                            "        <td style=\"width: 745px; -premailer-width: 685;\">\n" +
+                            "        <td style=\"width: 745px; !important; -premailer-width: 745;\">\n" +
                             "            <table class=\"iPhone_font\"\n" +
                             "                   style=\"padding: 0px; border: 0px currentColor; border-image: none; line-height: 18px; font-family: Lucida Grande, Helvetica, Arial, sans-serif; font-size: inherit;\">\n" +
                             "                <tbody>\n" +
                             "\t\t\t\t\t<tr>\t\t\t\t\t\t \n" +
-                            "\t\t\t\t\t\t<td style=\"width: 600px;\">\n" +
+                            "\t\t\t\t\t\t<td style=\"width: 745px;\">\n" +
                             "\t\t\t\t\t\t\t<!-- Header -->\n" +
                             "\t\t\t\t\t\t\t<div class=\"clearfix\" style=\"padding: 10px 0 15px 0; margin-bottom: 5px; \">\n" +
                             "\t\t\t\t\t\t\t\t<div style=\"float: left;\">\n" +
