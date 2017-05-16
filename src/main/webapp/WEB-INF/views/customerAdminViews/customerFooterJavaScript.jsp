@@ -26,3 +26,5 @@
 <script src="/resources/customerAdminPage/js/pagination.min.js"></script>
 <!-- Base -->
 <script src="/resources/customerAdminPage/js/main.js"></script>
+<!-- Nice Scroll -->
+<script src="/resources/baseStyle/jquery/jquery.nicescroll.js"></script>

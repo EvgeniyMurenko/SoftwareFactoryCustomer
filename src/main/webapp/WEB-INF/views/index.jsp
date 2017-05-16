@@ -32,7 +32,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 text-right login">
 
             <% String userName = (String) request.getSession().getAttribute("UserName");
-                if (userName == null){
+                if (userName == null) {
             %>
             <b>CASE OPEN</b> : <a href="javascript:void(0);"
                                   data-toggle="modal"
@@ -43,7 +43,8 @@
             %>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <span class="avatar-welcome"><%out.print((String) request.getSession().getAttribute("UserName"));%> <a href="/cabinet/"> 님 접속을 환영합니다.</a></span>
+                    <span class="avatar-welcome"><%out.print((String) request.getSession().getAttribute("UserName"));%> <a
+                            href="/cabinet/"> 님 접속을 환영합니다.</a></span>
                     <a href="javascript:void(0);" class="dropdown-toggle avatar" data-toggle="dropdown"><i
                             class="fa fa-user"></i></a>
                     <ul class="dropdown-menu">
@@ -75,32 +76,34 @@
                 <!-- #End Estimation -->
 
                 <!-- Estimation list case -->
-                <section class="estimation-list">
-                    <%
-                        ArrayList<Estimate> estimates = (ArrayList<Estimate>) request.getAttribute("estimates");
-                        Iterator<Estimate> estimateIterator = estimates.iterator();
-                        while (estimateIterator.hasNext()) {
-                            Estimate estimate = estimateIterator.next();
-                    %>
-                    <% if (estimate != null) { %>
+                <div class="scrollable" id="estimatetest">
+                    <section class="estimation-list">
+                        <%
+                            ArrayList<Estimate> estimates = (ArrayList<Estimate>) request.getAttribute("estimates");
+                            Iterator<Estimate> estimateIterator = estimates.iterator();
+                            while (estimateIterator.hasNext()) {
+                                Estimate estimate = estimateIterator.next();
+                        %>
+                        <% if (estimate != null) { %>
 
-                    <div class="clearfix estimate">
-                        <span class=<%
-                            if (estimate.isRespond()) out.print("check-on");
-                            else out.print("check-off");
-                        %>></span>
-                        <a href="javascript:void(0);"><span class="cb-title"><%
-                            out.print(estimate.getName() + " : "); %></span></a><span><%
-                        out.print(estimate.getEstimateGeneratedId());%></span> : <%
-                        if (estimate.isPriceRequest()) out.print("견적문의 ");
-                        if (estimate.isQuestionRequest()) out.print(" 일반문의");
-                    %><span class="cb-time"><%
-                        out.print(estimate.getDateRequest().toString().substring(0, 19)); %></span>
-                    </div>
+                        <div class="clearfix estimate">
+                            <span class=<%
+                                if (estimate.isRespond()) out.print("check-on");
+                                else out.print("check-off");
+                            %>></span>
+                            <a href="javascript:void(0);"><span class="cb-title"><%
+                                out.print(estimate.getName() + " : "); %></span></a><span><%
+                            out.print(estimate.getEstimateGeneratedId());%></span> : <%
+                            if (estimate.isPriceRequest()) out.print("견적문의 ");
+                            if (estimate.isQuestionRequest()) out.print(" 일반문의");
+                        %><span class="cb-time"><%
+                            out.print(estimate.getDateRequest().toString().substring(0, 19)); %></span>
+                        </div>
 
-                    <%}%>
-                    <%}%>
-                </section>
+                        <%}%>
+                        <%}%>
+                    </section>
+                </div>
                 <!-- #End Estimation list case -->
 
             </div>

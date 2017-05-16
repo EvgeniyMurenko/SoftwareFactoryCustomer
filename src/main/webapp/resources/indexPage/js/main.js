@@ -60,6 +60,10 @@ jQuery(document).ready(function ($) {
         size: 4
     });
 
+    //nice scroll
+    $("html").niceScroll();
+    $("#estimatetest").niceScroll();
+
     // Authorization from validation
     $('#authorizationForm').formValidation({
         framework: 'bootstrap',

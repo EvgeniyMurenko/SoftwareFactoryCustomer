@@ -45,6 +45,10 @@ jQuery(document).ready(function($) {
         format: 'YYYY-MM-DD HH:mm',
         daysOfWeekDisabled: [0, 6]
     });
+
+    //nice scroll
+    $("html").niceScroll();
+    $("#estimatetest").niceScroll();
 });
 
 var editor = CKEDITOR.replace('editor', {

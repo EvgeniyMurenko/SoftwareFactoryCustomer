@@ -20,3 +20,5 @@
 <script src="/resources/baseStyle/bootstrap/bootstrap.fileinput.min.js"></script>
 <!-- Base -->
 <script src="/resources/indexPage/js/main.js"></script>
+<!-- Nice Scroll -->
+<script src="/resources/baseStyle/jquery/jquery.nicescroll.js"></script>
