@@ -400,6 +400,7 @@
             '감사합니다',
             'success'
         );
+        history.pushState(null, null, '/main');
     });
 </script>
 <% } %>
@@ -413,6 +414,7 @@
             '감사합니다.',
             'success'
         );
+        history.pushState(null, null, '/main');
     });
 </script>
 <% } %>
