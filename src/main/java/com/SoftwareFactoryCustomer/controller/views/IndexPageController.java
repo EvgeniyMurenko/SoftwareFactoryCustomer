@@ -270,8 +270,7 @@ public class IndexPageController {
 
 
         //CREATE FINAL NEW CUSTOMER
-        CustomerInfo customerInfo = new CustomerInfo(userAfterSave, recipientName, "", phone, recipientMail, "" , false, new HashSet<>());
-        customerInfo.setId(userAfterSave.getId());
+        CustomerInfo customerInfo = new CustomerInfo(userAfterSave.getId(), userAfterSave, recipientName, "", phone, recipientMail, "" , false, true,"","","","","",new Date());
         customerInfoService.addNewCustomerInfo(customerInfo);
         CustomerInfo customerInfoCreated = customerInfoService.getCustomerInfoById(userAfterSave.getId());
 

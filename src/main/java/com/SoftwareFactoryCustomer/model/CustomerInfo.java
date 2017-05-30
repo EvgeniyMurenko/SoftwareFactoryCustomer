@@ -1,6 +1,7 @@
 package com.SoftwareFactoryCustomer.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -10,7 +11,8 @@ public class CustomerInfo {
     public CustomerInfo() {
     }
 
-    public CustomerInfo(User user, String name, String company, String phone, String email, String website, boolean isFullCreated, Set<Project> projects) {
+    public CustomerInfo(Long id, User user, String name, String company, String phone, String email, String website, boolean isFullCreated, boolean isStandardAccount, String directorsName, String directorsEmail, String directorsPhone, String companyType, String address, Date registrationDate) {
+        this.id = id;
         this.user = user;
         this.name = name;
         this.company = company;
@@ -18,7 +20,13 @@ public class CustomerInfo {
         this.email = email;
         this.website = website;
         this.isFullCreated = isFullCreated;
-        this.projects = projects;
+        this.isStandardAccount = isStandardAccount;
+        this.directorsName = directorsName;
+        this.directorsEmail = directorsEmail;
+        this.directorsPhone = directorsPhone;
+        this.companyType = companyType;
+        this.address = address;
+        this.registrationDate = registrationDate;
     }
 
     @Id
@@ -51,16 +59,34 @@ public class CustomerInfo {
     private String website;
 
 
-    @Column(name="is_full_created")
-    private boolean isFullCreated;
-
-
     @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Project> projects;
 
 
+    @Column(name="is_full_created")
+    private boolean isFullCreated;
+
+
     @Column(name = "is_standard_account")
     private boolean isStandardAccount;
+
+    @Column(name = "directors_name")
+    private String directorsName;
+
+    @Column(name = "directors_email")
+    private String directorsEmail;
+
+    @Column(name = "directors_phone")
+    private String directorsPhone;
+
+    @Column(name = "company_type")
+    private String companyType;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "registration_date")
+    private Date registrationDate;
 
 
     public User getUser() {
@@ -141,6 +167,54 @@ public class CustomerInfo {
 
     public void setStandardAccount(boolean standardAccount) {
         isStandardAccount = standardAccount;
+    }
+
+    public String getDirectorsName() {
+        return directorsName;
+    }
+
+    public void setDirectorsName(String directorsName) {
+        this.directorsName = directorsName;
+    }
+
+    public String getDirectorsEmail() {
+        return directorsEmail;
+    }
+
+    public void setDirectorsEmail(String directorsEmail) {
+        this.directorsEmail = directorsEmail;
+    }
+
+    public String getDirectorsPhone() {
+        return directorsPhone;
+    }
+
+    public void setDirectorsPhone(String directorsPhone) {
+        this.directorsPhone = directorsPhone;
+    }
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }
 
