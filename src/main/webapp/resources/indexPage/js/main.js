@@ -61,7 +61,6 @@ jQuery(document).ready(function ($) {
     });
 
     //nice scroll
-    $("html").niceScroll({cursorwidth: 10});
     $("#estimatetest").niceScroll();
 
     // Authorization from validation
