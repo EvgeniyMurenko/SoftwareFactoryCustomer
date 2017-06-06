@@ -35,6 +35,9 @@ public class IndexPageController {
     @Autowired
     PushNotificationService pushNotificationService;
 
+    @Autowired
+    ManagerInfoService managerInfoService;
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess,
                                   @RequestParam(value = "isGenerateCustomerIdSuccess", required = false) Boolean isGenerateSuccess,
@@ -274,10 +277,13 @@ public class IndexPageController {
         customerInfoService.addNewCustomerInfo(customerInfo);
         CustomerInfo customerInfoCreated = customerInfoService.getCustomerInfoById(userAfterSave.getId());
 
-        //CREATE #$GENERAL PROJECT FOR CUSTOMER
-        Project projectNormal = new Project(ProjectEnum.projectNameNormal.getDbValue(), new Date(), StatusEnum.OPEN.toString(), customerInfo, new HashSet<>(), "test");
-        Project projectEstimate = new Project(ProjectEnum.projectNameEstimate.getDbValue(), new Date(), StatusEnum.OPEN.toString(), customerInfo, new HashSet<>(), "test");
+        ManagerInfo managerInfo = managerInfoService.getManagerInfoById(3L);
 
+        //CREATE #$GENERAL PROJECT FOR CUSTOMER
+        Project projectNormal = new Project(ProjectEnum.projectNameNormal.getDbValue(), new Date(), StatusEnum.OPEN.toString(), customerInfo,
+                new HashSet<>(), "test", new Date(), null, "Default Normal project", managerInfo, "", "", "");
+        Project projectEstimate = new Project(ProjectEnum.projectNameEstimate.getDbValue(), new Date(), StatusEnum.OPEN.toString(), customerInfo,
+                new HashSet<>(), "test", new Date(), null, "Default Estimate project", managerInfo, "", "", "");
         Set<Project> projects = new HashSet<>();
         projects.add(projectNormal);
         projects.add(projectEstimate);
