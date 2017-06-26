@@ -55,7 +55,7 @@
                 <div class="notice-box-information other-font2" id="<%out.print("box_notice_"+notice.getId());%>" style="display: none; color: #000;">
                     <%out.print(notice.getNoticeText());%>
                     <%
-                        List<NoticeLink> noticeLinks = notice.getNoticeLinks();
+                        List<NoticeLink> noticeLinks = new ArrayList<>(notice.getNoticeLinks());
                         if (!noticeLinks.isEmpty()) {
 
 
