@@ -1,12 +1,18 @@
 package com.SoftwareFactoryCustomer.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "s_customer_info")
-public class CustomerInfo {
+public class CustomerInfo implements Serializable {
 
     public CustomerInfo() {
     }
@@ -33,39 +39,31 @@ public class CustomerInfo {
     @Column(name = "user_id", nullable = false)
     private Long id;
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
     @Column(name = "name")
     private String name;
-
 
     @Column(name = "company")
     private String company;
 
-
     @Column(name = "phone")
     private String phone;
-
 
     @Column(name = "email")
     private String email;
 
-
     @Column(name="web_site")
     private String website;
 
-
+    @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Project> projects;
 
-
     @Column(name="is_full_created")
     private boolean isFullCreated;
-
 
     @Column(name = "is_standard_account")
     private boolean isStandardAccount;
@@ -87,6 +85,10 @@ public class CustomerInfo {
 
     @Column(name = "registration_date")
     private Date registrationDate;
+
+    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CustomerHistory> customerHistories;
 
 
     public User getUser() {
@@ -169,6 +171,14 @@ public class CustomerInfo {
         isStandardAccount = standardAccount;
     }
 
+    public List<CustomerHistory> getCustomerHistories() {
+        return customerHistories;
+    }
+
+    public void setCustomerHistories(List<CustomerHistory> customerHistories) {
+        this.customerHistories = customerHistories;
+    }
+
     public String getDirectorsName() {
         return directorsName;
     }
@@ -216,5 +226,6 @@ public class CustomerInfo {
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
+
 }
 

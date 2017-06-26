@@ -4,12 +4,13 @@ package com.SoftwareFactoryCustomer.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "s_cases")
-public class Case {
+public class Case implements Serializable {
 
     public Case() {
     }
@@ -142,16 +143,4 @@ public class Case {
         this.appointmentTime = appointmentTime;
     }
 
-/*@Override
-    public String toString() {
-        return "Case{" +
-                "project=" + project +
-                ", id=" + id +
-                ", userManagerId=" + userManagerId +
-                ", projectTitle='" + projectTitle + '\'' +
-                ", status=" + status +
-                ", creationDate=" + creationDate +
-                ", messages=" + messages +
-                '}';
-    }*/
 }

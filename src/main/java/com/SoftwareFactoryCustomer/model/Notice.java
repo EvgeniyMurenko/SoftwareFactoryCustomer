@@ -3,19 +3,18 @@ package com.SoftwareFactoryCustomer.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "s_notices")
-public class Notice {
+public class Notice implements Serializable {
 
     public Notice() {
     }
 
-    public Notice(String title, String noticeText, Date dataCreate, Boolean isActiv, List<NoticeLink> noticeLinks) {
+    public Notice(String title, String noticeText, Date dataCreate, Boolean isActiv, Set<NoticeLink> noticeLinks) {
         this.title = title;
         this.noticeText = noticeText;
         this.dataCreate = dataCreate;
@@ -42,13 +41,13 @@ public class Notice {
     private Boolean isActiv;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<NoticeLink> noticeLinks;
+    private Set<NoticeLink> noticeLinks;
 
-    public List<NoticeLink> getNoticeLinks() {
+    public Set<NoticeLink> getNoticeLinks() {
         return noticeLinks;
     }
 
-    public void setNoticeLinks(List<NoticeLink> noticeLinks) {
+    public void setNoticeLinks(Set<NoticeLink> noticeLinks) {
         this.noticeLinks = noticeLinks;
     }
 

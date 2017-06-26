@@ -5,13 +5,14 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "s_messages")
-public class Message {
+public class Message implements Serializable {
 
     public Message() {
     }
@@ -50,7 +51,8 @@ public class Message {
     @Column(name = "is_read")
     private String isRead;
 
-    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     private Set<MessageLink> messageLinks;
 
     public Long getId() {

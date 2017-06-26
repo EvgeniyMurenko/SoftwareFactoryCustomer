@@ -4,19 +4,18 @@ package com.SoftwareFactoryCustomer.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "s_estimates")
-public class Estimate {
+public class Estimate implements Serializable {
 
     public Estimate() {
     }
 
-    public Estimate(String name, String estimateRequest, String email, boolean isRespond, boolean isPriceRequest,
-                    boolean isQuestionRequest, String phone, Date dateRequest, String estimateGeneratedId,
-                    Set<EstimateLink> estimateLinks, CustomerInfo customerInfo) {
+    public Estimate(String name, String estimateRequest, String email, boolean isRespond, boolean isPriceRequest, boolean isQuestionRequest, String phone, Date dateRequest, String estimateGeneratedId, Set<EstimateLink> estimateLinks, CustomerInfo customerInfo) {
         this.name = name;
         this.estimateRequest = estimateRequest;
         this.email = email;
@@ -77,9 +76,10 @@ public class Estimate {
     private Set<EstimateLink> estimateLinks;
 
 
-    @OneToOne
+    @OneToOne/*(cascade = CascadeType.ALL, fetch = FetchType.EAGER)*/
     @JoinColumn(name = "customer_info_id")
     CustomerInfo customerInfo;
+
 
     public Long getId() {
         return id;

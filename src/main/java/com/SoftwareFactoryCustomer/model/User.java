@@ -1,6 +1,7 @@
 package com.SoftwareFactoryCustomer.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,9 +20,11 @@ public class User implements Serializable{
 	@Column(name="sso_id", unique=true, nullable=false)
 	private String ssoId;
 
-	@NotEmpty
 	@Column(name="password", nullable=false)
 	private String password;
+
+	@Column(name = "is_delete", nullable=false)
+	private boolean isDelete;
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -29,6 +32,9 @@ public class User implements Serializable{
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "user_profile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<GoogleCloudKey> googleCloudKeys;
 
 	public Long getId() {
 		return id;
@@ -60,6 +66,22 @@ public class User implements Serializable{
 
 	public void setUserProfiles(Set<UserProfile> userProfiles) {
 		this.userProfiles = userProfiles;
+	}
+
+	public Set<GoogleCloudKey> getGoogleCloudKeys() {
+		return googleCloudKeys;
+	}
+
+	public void setGoogleCloudKeys(Set<GoogleCloudKey> googleCloudKeys) {
+		this.googleCloudKeys = googleCloudKeys;
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean delete) {
+		isDelete = delete;
 	}
 
 	@Override
@@ -98,13 +120,4 @@ public class User implements Serializable{
 	 * It is done here just for convenience purpose.
 	 */
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", ssoId='" + ssoId + '\'' +
-				", password='" + password + '\'' +
-		/*		", userProfiles=" + userProfiles +*/
-				'}';
-	}
 }

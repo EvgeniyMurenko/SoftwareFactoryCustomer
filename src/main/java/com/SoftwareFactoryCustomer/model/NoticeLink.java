@@ -4,10 +4,11 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "s_notice_link")
-public class NoticeLink {
+public class NoticeLink implements Serializable {
 
     public NoticeLink(){
     }

@@ -3,12 +3,18 @@ package com.SoftwareFactoryCustomer.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "s_google_cloud_keys")
-public class GoogleCloudKey {
+public class GoogleCloudKey implements Serializable {
 
     public GoogleCloudKey() {
+    }
+
+    public GoogleCloudKey(User user, String key) {
+        this.user = user;
+        this.key = key;
     }
 
     @Id
@@ -19,23 +25,17 @@ public class GoogleCloudKey {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private ManagerInfo managerInfo;
+    private User user;
 
     @Column(name = "cloud_key")
     private String key;
 
-
-    public GoogleCloudKey(ManagerInfo managerInfo, String key) {
-        this.managerInfo = managerInfo;
-        this.key = key;
+    public User getUser() {
+        return user;
     }
 
-    public ManagerInfo getManagerInfo() {
-        return managerInfo;
-    }
-
-    public void setManagerInfo(ManagerInfo managerInfo) {
-        this.managerInfo = managerInfo;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {

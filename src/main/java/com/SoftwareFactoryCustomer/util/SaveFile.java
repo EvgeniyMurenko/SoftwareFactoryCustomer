@@ -38,7 +38,7 @@ public class SaveFile {
 
         pathForSaveFile = MainPathEnum.mainPath + "/notice/";
 
-        List<NoticeLink> noticeLinks = notice.getNoticeLinks();
+        List<NoticeLink> noticeLinks = new ArrayList<>(notice.getNoticeLinks());
 
         for (MultipartFile file : this.files) {
             try {

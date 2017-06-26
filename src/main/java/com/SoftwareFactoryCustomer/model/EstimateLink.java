@@ -3,10 +3,11 @@ package com.SoftwareFactoryCustomer.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "s_estimate_link")
-public class EstimateLink {
+public class EstimateLink implements Serializable {
 
     public EstimateLink(){}
 
