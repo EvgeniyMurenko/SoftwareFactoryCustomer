@@ -1,9 +1,9 @@
 package com.SoftwareFactoryCustomer.dao;
 
-
 import com.SoftwareFactoryCustomer.model.Message;
 
 import java.util.List;
+
 
 public interface MessageDao {
 
