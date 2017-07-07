@@ -30,7 +30,7 @@ public class PushNotificationService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String dateString = dateFormat.format(data);
 
-        Message msg = new Message.Builder().collapseKey("gcm_message").delayWhileIdle(true).addData("message",message).addData("date", dateString).addData("title" , title).build();
+        Message msg = new Message.Builder().collapseKey("gcm_message").delayWhileIdle(true).addData("message",message).addData("date", dateString).addData("title" , title).addData("type" ,"ESTIMATE_CASE_PUSH_TYPE").build();
 
         try {
 
