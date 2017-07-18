@@ -81,12 +81,12 @@ public class IndexPageController {
                                 @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
                                 @RequestParam("fileEstimate[]") MultipartFile[] files) {
 
+        if (recipientName== null && "".equals(recipientName) && recipientMail== null && "".equals(recipientMail) && phone== null && "".equals(phone)
+                && recipientRequestText== null && "".equals(recipientRequestText) ){
 
-        System.out.println("name " + recipientName + " email " + recipientMail + " text "
-                + recipientRequestText + "phone" + phone);
-
-        System.out.println("========================START ESTIMATE CREATE");
-        System.out.println("========================ESTIMATE NAME: " + recipientName);
+            ModelAndView mainPageEstimateSuccess = new ModelAndView("redirect:/main");
+            mainPageEstimateSuccess.addObject("isEstimateSuccess", new Boolean(false));
+        }
 
 
         // CREATE ESTIMATE
