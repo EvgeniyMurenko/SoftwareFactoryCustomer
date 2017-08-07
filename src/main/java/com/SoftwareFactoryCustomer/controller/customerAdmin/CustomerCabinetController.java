@@ -26,25 +26,25 @@ import java.util.*;
 public class CustomerCabinetController {
 
     @Autowired
-    CustomerInfoService customerInfoService;
+    private CustomerInfoService customerInfoService;
 
     @Autowired
-    MessageService messageService;
+    private MessageService messageService;
 
     @Autowired
-    ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
-    CaseService caseService;
+    private CaseService caseService;
 
     @Autowired
-    ManagerInfoService managerInfoService;
+    private ManagerInfoService managerInfoService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    PushNotificationService pushNotificationService;
+    private PushNotificationService pushNotificationService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView getCustomerCabinet(HttpSession httpSession) {
@@ -59,15 +59,13 @@ public class CustomerCabinetController {
         if (projectsToShow != null) {
 
             // GET CASES FROM PROJECT
-            Iterator<Project> projectIterator = projectsToShow.iterator();
-            while (projectIterator.hasNext()) {
-                Project project = projectIterator.next();
+            for (Project project : projectsToShow) {
                 getCasesFromProject(project, casesToShow);
             }
         }
 
         // SORT CASE
-        Collections.sort(casesToShow, new CaseByStatusAndDateComparator());
+        casesToShow.sort(new CaseByStatusAndDateComparator());
 
         //PUT OBJECTS TO MODEL
         customerCabinet.addObject("currentProjectCasesName", "All Cases");
@@ -87,7 +85,7 @@ public class CustomerCabinetController {
         Set<Project> projectsToShow = customerInfo.getProjects();
 
         List<Project> sortedProjectListToShow = new ArrayList<>(projectsToShow);
-        Collections.sort(sortedProjectListToShow, new ProjectByDateComparator());
+        sortedProjectListToShow.sort(new ProjectByDateComparator());
 
         //PUT OBJECTS TO MODEL
         customerCabinet.addObject("customerName", customerInfo.getName());
@@ -157,7 +155,7 @@ public class CustomerCabinetController {
         saveFile.saveMessageFilesToMessage(caseMessage);
         messageService.updateMessage(caseMessage);
 
-        pushNotificationService.pushNotificationToGCM(message , MessageEnum.CASE.toString()+" :: new Case "+newCase.getProjectTitle(), new Date());
+        pushNotificationService.pushNotificationToGCM(message, MessageEnum.CASE.toString() + " :: new Case " + newCase.getProjectTitle(), new Date());
 
         ModelAndView modelAndView = new ModelAndView("redirect:/list");
         return modelAndView;
@@ -195,10 +193,9 @@ public class CustomerCabinetController {
 
         //SAVE FILE
 
-            SaveFile saveFile = new SaveFile(files);
-            saveFile.saveMessageFilesToMessage(message);
-            messageService.updateMessage(message);
-
+        SaveFile saveFile = new SaveFile(files);
+        saveFile.saveMessageFilesToMessage(message);
+        messageService.updateMessage(message);
 
 
         caseService.updateCase(aCase);
@@ -206,7 +203,7 @@ public class CustomerCabinetController {
         // REDIRECT TO CHAT
         String redirectLink = "redirect:/cabinet/case/" + id;
 
-        pushNotificationService.pushNotificationToGCM(messageText , MessageEnum.MESSAGE.toString()+" :: Case "+aCase.getProjectTitle(), new Date());
+        pushNotificationService.pushNotificationToGCM(messageText, MessageEnum.MESSAGE.toString() + " :: Case " + aCase.getProjectTitle(), new Date());
 
         return new ModelAndView(redirectLink);
     }
@@ -222,7 +219,7 @@ public class CustomerCabinetController {
         caseService.updateCase(caseToClose);
 
 
-        pushNotificationService.pushNotificationToGCM(userId.toString() , MessageEnum.CLOSE_CASE.toString()+" :: "+caseToClose.getProjectTitle(), new Date());
+        pushNotificationService.pushNotificationToGCM(userId.toString(), MessageEnum.CLOSE_CASE.toString() + " :: " + caseToClose.getProjectTitle(), new Date());
 
         return new ModelAndView("redirect:/cabinet/");
     }
@@ -244,7 +241,7 @@ public class CustomerCabinetController {
         MessageByDateComparator messageByDateComparator = new MessageByDateComparator();
 
         // SORT BY DATE
-        Collections.sort(messagesSorted, messageByDateComparator);
+        messagesSorted.sort(messageByDateComparator);
 
         //PUT OBJECTS TO MODEL
         caseChat.addObject("messagesSorted", messagesSorted);
@@ -280,7 +277,7 @@ public class CustomerCabinetController {
         Set<Project> projectsToShow = customerInfo.getProjects();
 
         List<Project> sortedProjectListToShow = new ArrayList<>(projectsToShow);
-        Collections.sort(sortedProjectListToShow, new ProjectByDateComparator());
+        sortedProjectListToShow.sort(new ProjectByDateComparator());
 
         //PUT OBJECTS TO MODEL
         modelAndView.addObject("customerName", customerName);

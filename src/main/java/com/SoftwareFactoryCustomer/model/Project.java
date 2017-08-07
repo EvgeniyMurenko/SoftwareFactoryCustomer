@@ -1,6 +1,8 @@
 package com.SoftwareFactoryCustomer.model;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
+import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
 @Entity
 @Table(name = "s_projects")
@@ -31,11 +35,13 @@ public class Project implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_customer_id")
     private CustomerInfo customerInfo;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Case> cases;
 
     @Column(name = "technology_type")
@@ -50,7 +56,8 @@ public class Project implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_manager_id")
     private ManagerInfo managerInfo;
 
@@ -63,8 +70,7 @@ public class Project implements Serializable {
     @Column(name = "pm_phone")
     private String pmPhone;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<ProjectTask> projectTasks;
+
 
     @Column(name = "scenario_uuid_name")
     private String scenarioUuidName;
@@ -206,11 +212,5 @@ public class Project implements Serializable {
         this.scenarioUuidName = scenarioUuidName;
     }
 
-    public Set<ProjectTask> getProjectTasks() {
-        return projectTasks;
-    }
 
-    public void setProjectTasks(Set<ProjectTask> projectTasks) {
-        this.projectTasks = projectTasks;
-    }
 }

@@ -1,6 +1,5 @@
 package com.SoftwareFactoryCustomer.model;
 
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -32,11 +31,11 @@ public class Message implements Serializable {
     @Column(name = "message_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "case_id")
     private Case aCase;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -52,7 +51,7 @@ public class Message implements Serializable {
     private String isRead;
 
 
-    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private Set<MessageLink> messageLinks;
 
     public Long getId() {

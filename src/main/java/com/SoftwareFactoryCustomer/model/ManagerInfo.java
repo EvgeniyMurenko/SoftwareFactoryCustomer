@@ -15,13 +15,15 @@ public class ManagerInfo implements Serializable {
     public ManagerInfo() {
     }
 
-    public ManagerInfo(Long id, User user, String name, String phone, String email, Date birthday) {
+    public ManagerInfo(Long id, User user, String name, String phone, String email, Date birthday, Permission managerInfoPermissions, Set<Project> projects) {
         this.id = id;
         this.user = user;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.birthday = birthday;
+        this.managerInfoPermissions = managerInfoPermissions;
+        this.projects = projects;
     }
 
     @Id
@@ -50,8 +52,11 @@ public class ManagerInfo implements Serializable {
     private Date birthday;
 
 
+    @OneToOne(fetch = FetchType.LAZY , mappedBy="managerInfo", cascade = CascadeType.ALL)
+    private Permission managerInfoPermissions;
 
-    @OneToMany(mappedBy = "managerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "managerInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Project> projects;
 
     public User getUser() {
@@ -84,6 +89,14 @@ public class ManagerInfo implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Permission getManagerInfoPermissions() {
+        return managerInfoPermissions;
+    }
+
+    public void setManagerInfoPermissions(Permission managerInfoPermissions) {
+        this.managerInfoPermissions = managerInfoPermissions;
     }
 
     public Long getId() {

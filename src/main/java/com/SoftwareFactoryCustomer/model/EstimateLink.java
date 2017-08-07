@@ -9,7 +9,8 @@ import java.io.Serializable;
 @Table(name = "s_estimate_link")
 public class EstimateLink implements Serializable {
 
-    public EstimateLink(){}
+    public EstimateLink() {
+    }
 
     public EstimateLink(Estimate estimate, String fileLink, String fileName, String fileUuidName) {
         this.estimate = estimate;
@@ -25,7 +26,7 @@ public class EstimateLink implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estimate_id")
     private Estimate estimate;
 

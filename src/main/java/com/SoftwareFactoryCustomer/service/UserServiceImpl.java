@@ -51,9 +51,7 @@ public class UserServiceImpl implements UserService {
             if (!user.getPassword().equals(entity.getPassword())) {
                 entity.setPassword(passwordEncoder.encode(user.getPassword()));
             }
-            //entity.setFirstName(user.getFirstName());
-            //entity.setLastName(user.getLastName());
-            //entity.setEmail(user.getEmail());
+            entity.setAvatarImage(user.getAvatarImage());
             entity.setUserProfiles(user.getUserProfiles());
         }
     }
@@ -77,7 +75,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setSsoId(UUID.randomUUID().toString());
         user.setPassword(UUID.randomUUID().toString());
-
+        user.setAvatarImage("");
 
         UserProfile userProfile = new UserProfile();
         userProfile.setId(1);

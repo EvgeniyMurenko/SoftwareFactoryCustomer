@@ -40,7 +40,7 @@ public class Notice implements Serializable {
     @Column(name = "isActiv")
     private Boolean isActiv;
 
-    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<NoticeLink> noticeLinks;
 
     public Set<NoticeLink> getNoticeLinks() {

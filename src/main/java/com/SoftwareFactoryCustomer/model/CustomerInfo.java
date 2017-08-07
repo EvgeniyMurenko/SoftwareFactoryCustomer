@@ -1,7 +1,8 @@
 package com.SoftwareFactoryCustomer.model;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,8 +40,8 @@ public class CustomerInfo implements Serializable {
     @Column(name = "user_id", nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name = "user_id" )
     private User user;
 
     @Column(name = "name")
@@ -58,8 +59,8 @@ public class CustomerInfo implements Serializable {
     @Column(name="web_site")
     private String website;
 
-    @Fetch(value = FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
     private Set<Project> projects;
 
     @Column(name="is_full_created")
@@ -86,8 +87,8 @@ public class CustomerInfo implements Serializable {
     @Column(name = "registration_date")
     private Date registrationDate;
 
-    @Fetch(value = FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "customerInfo", cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
     private List<CustomerHistory> customerHistories;
 
 
@@ -103,7 +104,7 @@ public class CustomerInfo implements Serializable {
         return projects;
     }
 
-    public void setProjects(Set<Project> projects) {
+    public void setProjects(Set <Project> projects) {
         this.projects = projects;
     }
 

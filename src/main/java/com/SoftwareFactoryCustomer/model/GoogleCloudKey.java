@@ -23,7 +23,7 @@ public class GoogleCloudKey implements Serializable {
     @Column(name = "google_cloud_keys_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

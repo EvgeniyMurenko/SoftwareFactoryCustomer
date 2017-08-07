@@ -15,8 +15,6 @@ public interface EstimateService {
 
     List<Estimate> getAllEstimates();
 
-
-
     Estimate getEstimateById(long estimateId);
 
 }

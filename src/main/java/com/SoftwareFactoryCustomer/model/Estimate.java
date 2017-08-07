@@ -1,6 +1,5 @@
 package com.SoftwareFactoryCustomer.model;
 
-
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -72,13 +71,14 @@ public class Estimate implements Serializable {
     private String estimateGeneratedId;
 
 
-    @OneToMany(mappedBy = "estimate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "estimate", cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
     private Set<EstimateLink> estimateLinks;
 
 
-    @OneToOne/*(cascade = CascadeType.ALL, fetch = FetchType.EAGER)*/
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_info_id")
-    CustomerInfo customerInfo;
+    private CustomerInfo customerInfo;
 
 
     public Long getId() {

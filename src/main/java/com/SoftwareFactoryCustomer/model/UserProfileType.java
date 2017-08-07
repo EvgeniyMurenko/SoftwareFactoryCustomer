@@ -2,20 +2,21 @@ package com.SoftwareFactoryCustomer.model;
 
 import java.io.Serializable;
 
-public enum UserProfileType implements Serializable{
-	CUSTOMER("CUSTOMER"),
-	DBA("DBA"),
-	MANAGER("MANAGER"),
-	STAFF("STAFF");
+public enum UserProfileType implements Serializable {
 
-	String userProfileType;
+    CUSTOMER("CUSTOMER"),
+    DBA("DBA"),
+    MANAGER("MANAGER"),
+    STAFF("STAFF");
 
-	private UserProfileType(String userProfileType){
-		this.userProfileType = userProfileType;
-	}
+    String userProfileType;
 
-	public String getUserProfileType(){
-		return userProfileType;
-	}
+    private UserProfileType(String userProfileType) {
+        this.userProfileType = userProfileType;
+    }
+
+    public String getUserProfileType() {
+        return userProfileType;
+    }
 
 }

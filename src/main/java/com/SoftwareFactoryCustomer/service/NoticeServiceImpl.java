@@ -9,44 +9,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+@Transactional
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
 
     private NoticeDao noticeDao;
 
-    @Autowired(required = true)
+    @Autowired
     public void setNoticeDao(NoticeDao noticeDao) {
         this.noticeDao = noticeDao;
     }
 
 
     @Override
-    @Transactional
     public void addNewNotice(Notice notice) {
         noticeDao.create(notice);
     }
 
     @Override
-    @Transactional
     public void updateNotice(Notice notice) {
         noticeDao.update(notice);
     }
 
     @Override
-    @Transactional
     public void deleteNotice(Notice notice) {
         noticeDao.delete(notice);
     }
 
     @Override
-    @Transactional
     public Notice getNoticeById(Long id) {
         return noticeDao.read(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Notice> getAllNotices() {
         return noticeDao.findAll();
     }

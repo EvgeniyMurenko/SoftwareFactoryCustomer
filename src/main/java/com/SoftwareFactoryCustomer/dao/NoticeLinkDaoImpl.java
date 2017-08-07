@@ -17,8 +17,6 @@ import java.util.List;
 @Repository("noticeLinkDao")
 public class NoticeLinkDaoImpl implements NoticeLinkDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProjectDaoImpl.class);
-
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -45,14 +43,14 @@ public class NoticeLinkDaoImpl implements NoticeLinkDao {
     public void update(NoticeLink noticeLink) {
         Session session = sessionFactory.getCurrentSession();
         session.update(noticeLink);
-        logger.error("NoticeLink  update successfully, NoticeLink =" + noticeLink);
+
     }
 
     @Override
     public void delete(NoticeLink noticeLink) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(noticeLink);
-        logger.info("NoticeLink deleted successfully, NoticeLink details=" + noticeLink);
+
     }
 
     @Override

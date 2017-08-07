@@ -50,6 +50,7 @@ public class HibernateConfiguration {
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
         properties.setProperty("hibernate.connection.useUnicode", "true");
+        properties.setProperty("hibernate.enable_lazy_load_no_trans" ,"true");
         properties.setProperty("hibernate.connection.characterEncoding", "UTF-8"); // UTF-8 or utf8?
         return properties;
 

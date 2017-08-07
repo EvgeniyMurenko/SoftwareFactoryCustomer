@@ -1,14 +1,14 @@
 package com.SoftwareFactoryCustomer.model;
 
-
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "s_customer_history")
-public class CustomerHistory {
+public class CustomerHistory  implements Serializable {
 
     public CustomerHistory(){}
 
@@ -37,7 +37,7 @@ public class CustomerHistory {
     private Date date;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_info_id")
     private CustomerInfo customerInfo;
 

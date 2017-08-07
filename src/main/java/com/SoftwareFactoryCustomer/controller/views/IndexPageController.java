@@ -27,16 +27,16 @@ public class IndexPageController {
 
 
     @Autowired
-    AuthenticationTrustResolver authenticationTrustResolver;
+    private AuthenticationTrustResolver authenticationTrustResolver;
 
     @Autowired
-    EstimateService estimateService;
+    private EstimateService estimateService;
 
     @Autowired
-    PushNotificationService pushNotificationService;
+    private PushNotificationService pushNotificationService;
 
     @Autowired
-    ManagerInfoService managerInfoService;
+    private ManagerInfoService managerInfoService;
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess,
@@ -72,17 +72,17 @@ public class IndexPageController {
 
 
     @Autowired
-    MailService mailService;
+    private MailService mailService;
 
     @ResponseBody
     @RequestMapping(value = "/estimate", method = RequestMethod.POST)
     public ModelAndView estimateWindow(@RequestParam("name") String recipientName, @RequestParam("email") String recipientMail, @RequestParam("phone") String phone,
-                                @RequestParam("message") String recipientRequestText, @RequestParam(value = "price_request", required = false) boolean priceRequest,
-                                @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
-                                @RequestParam("fileEstimate[]") MultipartFile[] files) {
+                                       @RequestParam("message") String recipientRequestText, @RequestParam(value = "price_request", required = false) boolean priceRequest,
+                                       @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
+                                       @RequestParam("fileEstimate[]") MultipartFile[] files) {
 
-        if (recipientName== null && "".equals(recipientName) && recipientMail== null && "".equals(recipientMail) && phone== null && "".equals(phone)
-                && recipientRequestText== null && "".equals(recipientRequestText) ){
+        if (recipientName == null && "".equals(recipientName) && recipientMail == null && "".equals(recipientMail) && phone == null && "".equals(phone)
+                && recipientRequestText == null && "".equals(recipientRequestText)) {
 
             ModelAndView mainPageEstimateSuccess = new ModelAndView("redirect:/main");
             mainPageEstimateSuccess.addObject("isEstimateSuccess", new Boolean(false));
@@ -133,7 +133,7 @@ public class IndexPageController {
         estimate.setCustomerInfo(customerInfo);
         estimateService.updateEstimate(estimate);
 
-        pushNotificationService.pushNotificationToGCM(recipientRequestText, MessageEnum.ESTIMATE.toString()+" :: "+estimate.getName(), new Date());
+        pushNotificationService.pushNotificationToGCM(recipientRequestText, MessageEnum.ESTIMATE.toString() + " :: " + estimate.getName(), new Date());
 
         //REDIRECT TO MAIN AND SHOW SUCCESS
         ModelAndView mainPageEstimateSuccess = new ModelAndView("redirect:/main");
@@ -164,10 +164,10 @@ public class IndexPageController {
     }
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    CustomerInfoService customerInfoService;
+    private CustomerInfoService customerInfoService;
 
     @RequestMapping(value = "/generateCustomerId", method = RequestMethod.POST)
     public ModelAndView requestIdCreateAccount(@RequestParam("userId") Long userId, @RequestParam("name") String name, @RequestParam("email") String email,
@@ -273,7 +273,7 @@ public class IndexPageController {
 
 
         //CREATE FINAL NEW CUSTOMER
-        CustomerInfo customerInfo = new CustomerInfo(userAfterSave.getId(), userAfterSave, recipientName, "", phone, recipientMail, "" , false, true,"","","","","",new Date());
+        CustomerInfo customerInfo = new CustomerInfo(userAfterSave.getId(), userAfterSave, recipientName, "", phone, recipientMail, "", false, true, "", "", "", "", "", new Date());
         customerInfoService.addNewCustomerInfo(customerInfo);
         CustomerInfo customerInfoCreated = customerInfoService.getCustomerInfoById(userAfterSave.getId());
 

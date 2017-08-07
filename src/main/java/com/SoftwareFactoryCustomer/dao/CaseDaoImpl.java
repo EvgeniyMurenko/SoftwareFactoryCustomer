@@ -35,8 +35,15 @@ public class CaseDaoImpl implements CaseDao {
     @Override
     public Case read(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        Case aCase = (Case) session.get(Case.class, id);
-        return aCase;
+        Query query = session.createQuery("select distinct aCase from Case aCase " +
+                "left join fetch aCase.messages message " +
+                "left join fetch message.messageLinks " +
+                "left join fetch aCase.project pr " +
+                "left join fetch message.user " +
+                "left join fetch pr.customerInfo " +
+                "where aCase.id = :id");
+        query.setParameter("id", id);
+        return (Case) query.uniqueResult();
     }
 
     @Override

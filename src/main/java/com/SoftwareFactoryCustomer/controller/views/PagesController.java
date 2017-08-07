@@ -96,7 +96,7 @@ public class PagesController {
     }
 
     @Autowired
-    NoticeService noticeService;
+    private NoticeService noticeService;
 
     @RequestMapping(value = { "/notices" }, method = RequestMethod.GET)
     public ModelAndView notices() {
