@@ -164,6 +164,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public MultipartResolver multipartResolver() {
         org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(1000000000);
+        multipartResolver.setDefaultEncoding("ISO-8859-1");
         return multipartResolver;
     }
 

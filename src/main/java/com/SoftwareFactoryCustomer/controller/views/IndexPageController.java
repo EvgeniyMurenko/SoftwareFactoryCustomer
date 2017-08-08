@@ -7,6 +7,7 @@ import com.SoftwareFactoryCustomer.service.*;
 import com.SoftwareFactoryCustomer.util.AppMethods;
 import com.SoftwareFactoryCustomer.util.SaveFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.Date;
@@ -76,10 +78,14 @@ public class IndexPageController {
 
     @ResponseBody
     @RequestMapping(value = "/estimate", method = RequestMethod.POST)
-    public ModelAndView estimateWindow(@RequestParam("name") String recipientName, @RequestParam("email") String recipientMail, @RequestParam("phone") String phone,
-                                       @RequestParam("message") String recipientRequestText, @RequestParam(value = "price_request", required = false) boolean priceRequest,
-                                       @RequestParam(value = "question_request", required = false) boolean questionRequest, Model model,
-                                       @RequestParam("fileEstimate[]") MultipartFile[] files) {
+    public ModelAndView estimateWindow(@RequestParam("name") String recipientName,
+                                       @RequestParam("email") String recipientMail,
+                                       @RequestParam("phone") String phone,
+                                       @RequestParam("message") String recipientRequestText,
+                                       @RequestParam(value = "price_request", required = false) boolean priceRequest,
+                                       @RequestParam(value = "question_request", required = false) boolean questionRequest,
+                                       @RequestParam("fileEstimate[]") MultipartFile[] files,
+                                       HttpServletRequest httpRequest) {
 
         if (recipientName == null && "".equals(recipientName) && recipientMail == null && "".equals(recipientMail) && phone == null && "".equals(phone)
                 && recipientRequestText == null && "".equals(recipientRequestText)) {
@@ -292,5 +298,17 @@ public class IndexPageController {
 
         customerInfoService.updateCustomerInfo(customerInfoCreated);
         return customerInfo;
+    }
+
+
+    private static final boolean isMultipartContent(HttpServletRequest request) {
+        String contentType = request.getContentType();
+        if (contentType == null) {
+            return false;
+        }
+        if (contentType.toLowerCase().startsWith("multipart/")) {
+            return true;
+        }
+        return false;
     }
 }
