@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+      /*  user.setPassword(passwordEncoder.encode(user.getPassword()));*/
         dao.save(user);
     }
 
@@ -49,7 +49,8 @@ public class UserServiceImpl implements UserService {
         if (entity != null) {
             entity.setSsoId(user.getSsoId());
             if (!user.getPassword().equals(entity.getPassword())) {
-                entity.setPassword(passwordEncoder.encode(user.getPassword()));
+       /*         entity.setPassword(passwordEncoder.encode(user.getPassword()));*/
+                entity.setPassword(user.getPassword());
             }
             entity.setAvatarImage(user.getAvatarImage());
             entity.setUserProfiles(user.getUserProfiles());
