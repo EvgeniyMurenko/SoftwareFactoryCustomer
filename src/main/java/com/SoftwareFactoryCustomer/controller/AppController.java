@@ -79,6 +79,8 @@ public class AppController {
             CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(currentUser.getId());
 
             session.setAttribute("UserName" , customerInfo.getName());
+
+            if (currentUser.isDelete()) return new ModelAndView("redirect:/main").addObject("isDelete" , Boolean.TRUE);
         } else {
             modelAndView.setViewName("redirect:/");
         }

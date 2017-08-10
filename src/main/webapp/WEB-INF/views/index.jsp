@@ -391,32 +391,49 @@
 
 <%@ include file="siteFooterJavaScript.jsp" %>
 
-<% Boolean isEstimateSuccess = (Boolean) request.getAttribute("isEstimateSuccess"); %>
-<% if (isEstimateSuccess != null && isEstimateSuccess) { %>
-<script>
-    jQuery(document).ready(function ($) {
-        swal(
-            '정상적으로 접수 되었습니다!',
-            '감사합니다',
-            'success'
-        );
-        history.pushState(null, null, '/main');
-    });
-</script>
-<% } %>
-<% Boolean isGenerateSuccess = (Boolean) request.getAttribute("isGenerateCustomerIdSuccess"); %>
-<% if (isGenerateSuccess != null && isGenerateSuccess) { %>
-<script>
-    jQuery(document).ready(function ($) {
-        swal(
-            '축하드립니다.',
-            '고객님의 CASE ID가 등록되었습니다.입력하신 E-MAIL로 ID가 발송되었습니다.E-MAIL 확인 후 접속해 주시기 바랍니다.' +
-            '감사합니다.',
-            'success'
-        );
-        history.pushState(null, null, '/main');
-    });
-</script>
+<%
+    Boolean isEstimateSuccess = (Boolean) request.getAttribute("isEstimateSuccess");
+    if (isEstimateSuccess != null && isEstimateSuccess) { %>
+        <script>
+            jQuery(document).ready(function ($) {
+                swal(
+                    '정상적으로 접수 되었습니다!',
+                    '감사합니다',
+                    'success'
+                );
+                history.pushState(null, null, '/main');
+            });
+        </script>
+<% }
+
+    Boolean isGenerateSuccess = (Boolean) request.getAttribute("isGenerateCustomerIdSuccess");
+    if (isGenerateSuccess != null && isGenerateSuccess) { %>
+        <script>
+            jQuery(document).ready(function ($) {
+                swal(
+                    '축하드립니다.',
+                    '고객님의 CASE ID가 등록되었습니다.입력하신 E-MAIL로 ID가 발송되었습니다.E-MAIL 확인 후 접속해 주시기 바랍니다.' +
+                    '감사합니다.',
+                    'success'
+                );
+                history.pushState(null, null, '/main');
+            });
+        </script>
+<% }
+
+      Boolean isDelete = (Boolean) request.getAttribute("isDelete");
+      if (isDelete  != null && isDelete ) { %>
+        <script>
+            jQuery(document).ready(function ($) {
+                swal(
+                    'Oops',
+                    'Your account is deleted. ' +
+                    'Please contact our support team',
+                    'error'
+                );
+                history.pushState(null, null, '/main');
+            });
+        </script>
 <% } %>
 
 </body>

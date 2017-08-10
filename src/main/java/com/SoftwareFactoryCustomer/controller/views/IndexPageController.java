@@ -44,6 +44,7 @@ public class IndexPageController {
     public ModelAndView loginPage(@RequestParam(value = "isEstimateSuccess", required = false) Boolean isEstimateSuccess,
                                   @RequestParam(value = "isGenerateCustomerIdSuccess", required = false) Boolean isGenerateSuccess,
                                   @RequestParam(value = "isSessionExpired", required = false) Boolean isSessionExpired,
+                                  @RequestParam(value = "isDelete", required = false) Boolean isDelete,
                                   HttpSession httpSession) {
 
         if (isCurrentAuthenticationAnonymous() || httpSession.getAttribute("UserName") != null) {
@@ -58,6 +59,10 @@ public class IndexPageController {
             if (isSessionExpired != null) {
                 mainPage.addObject("isSessionExpired", isSessionExpired);
             }
+            if (isDelete != null) {
+                mainPage.addObject("isDelete", isDelete);
+            }
+
 
             ArrayList<Estimate> estimateUnsorted = (ArrayList<Estimate>) estimateService.getAllEstimates();
 
