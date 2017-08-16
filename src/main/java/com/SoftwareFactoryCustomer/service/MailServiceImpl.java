@@ -17,6 +17,8 @@ public class MailServiceImpl implements MailService {
     @Autowired
     JavaMailSender mailSender;
 
+    String serverEmail = "sofac.team@gmail.com";
+
     @Override
     public void sendNaverMailAfterEstimate(String estimateId, String registrationLink, String recipientMail) {
         try {
@@ -444,6 +446,31 @@ public class MailServiceImpl implements MailService {
                 }
             });
             System.out.println("Message Send...Hurrey");
+        } catch (MailException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+
+    @Override
+    public void sendBugExceptionToEmail(String message) {
+
+
+        try {
+
+            mailSender.send(new MimeMessagePreparator() {
+
+                public void prepare(MimeMessage mimeMessage) throws Exception {
+
+                    mimeMessage.setFrom(new InternetAddress(serverEmail, "SoFAC"));
+                    mimeMessage.setRecipient(Message.RecipientType.TO,
+                            new InternetAddress("sofac.bug.finder@gmail.com"));
+                    mimeMessage.setSubject("CUSTOMER part", "utf-8");
+                    mimeMessage.setText(message);
+
+                }
+            });
+
         } catch (MailException ex) {
             System.err.println(ex.getMessage());
         }
