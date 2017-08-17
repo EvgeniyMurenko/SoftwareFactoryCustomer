@@ -150,7 +150,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group text-right mt25">
-                        <button type="submit" class="btn btn-primary btn-mobile">Send case</button>
+                        <button type="submit" class="btn btn-primary btn-mobile btn-submit">Send case</button>
                     </div>
                 </div>
             </div>

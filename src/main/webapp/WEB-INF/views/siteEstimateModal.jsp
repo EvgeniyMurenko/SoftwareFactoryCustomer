@@ -11,7 +11,7 @@
         <div class="modal-content">
 
             <!-- Estimate modal title -->
-            <form id="estimationForm" action="/estimate?${_csrf.parameterName}=${_csrf.token}" method="POST"
+            <form id="estimationForm" action="/estimate" method="POST"
                   class="form-horizontal" enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -87,7 +87,7 @@
 
                 <!-- Estimate modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-mobile">보내기</button>
+                    <button type="submit" class="btn btn-primary btn-mobile btn-submit" >보내기</button>
                     <button type="button" class="btn btn-default btn-mobile" data-dismiss="modal">닫기</button>
                 </div>
             </form>

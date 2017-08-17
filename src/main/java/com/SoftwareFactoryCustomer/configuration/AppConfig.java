@@ -1,5 +1,7 @@
 package com.SoftwareFactoryCustomer.configuration;
 
+import com.SoftwareFactoryCustomer.interceptor.SessionCheckerInterceptor;
+import com.SoftwareFactoryCustomer.interceptor.UserInterceptor;
 import com.fasterxml.classmate.Filter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -59,6 +61,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         registry.viewResolver(viewResolver);
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SessionCheckerInterceptor());
+        registry.addInterceptor(new UserInterceptor());
+    }
 
 
     /**
@@ -79,18 +86,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
 
-    /**
-     * Configure MessageSource to lookup any validation/error message in internationalized property files
-     */
-
-/*
-    @Bean
-	public MessageSource messageSource() {
-	    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-	    messageSource.setBasename("messages");
-	    return messageSource;
-	}*/
-
 
     /**
      * Optional. It's only required when handling '.' in @PathVariables which otherwise ignore everything after last '.' in @PathVaidables argument.
@@ -101,39 +96,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public void configurePathMatch(PathMatchConfigurer matcher) {
         matcher.setUseRegisteredSuffixPatternMatch(true);
     }
-
-
-
-                /*Localization beans*/
-/*
-    @Bean
-    public ReloadableResourceBundleMessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:locale");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
-    }*/
-
- /*   @Bean
-    public CookieLocaleResolver localeResolver() {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.ENGLISH);
-        localeResolver.setCookieName("my-locale-cookie");
-        localeResolver.setCookieMaxAge(3600);
-        return localeResolver;
-    }*/
-
- /*   @Bean
-    public LocaleChangeInterceptor localeInterceptor() {
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang");
-        return interceptor;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeInterceptor());
-    }*/
 
 
     // Java mail

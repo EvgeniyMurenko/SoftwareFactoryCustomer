@@ -40,22 +40,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class AppController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    UserProfileService userProfileService;
+    private UserProfileService userProfileService;
 
     @Autowired
-    MessageSource messageSource;
+    private PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
 
     @Autowired
-    PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
+    private CustomerInfoService customerInfoService;
 
-    @Autowired
-    AuthenticationTrustResolver authenticationTrustResolver;
-
-    @Autowired
-    CustomerInfoService customerInfoService;
 
     @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
     public ModelAndView listUsers(HttpSession session) {
@@ -65,7 +60,9 @@ public class AppController {
         Set profiles = currentUser.getUserProfiles();
 
         UserProfile userProfile = null;
+
         Iterator iterator = profiles.iterator();
+
         while (iterator.hasNext()) {
             userProfile = (UserProfile) iterator.next();
         }
@@ -73,14 +70,16 @@ public class AppController {
         ModelAndView modelAndView = new ModelAndView();
 
         if (userProfile.getType().equals("CUSTOMER")) {
+
+            if (currentUser.isDelete()) {
+                return new ModelAndView("redirect:/main").addObject("isDelete", Boolean.TRUE);
+            }
+
             System.out.println("LOGIN AS CUSTOMER");
             modelAndView.setViewName("redirect:/cabinet/");
-
             CustomerInfo customerInfo = customerInfoService.getCustomerInfoById(currentUser.getId());
+            session.setAttribute("UserName", customerInfo.getName());
 
-            session.setAttribute("UserName" , customerInfo.getName());
-
-            if (currentUser.isDelete()) return new ModelAndView("redirect:/main").addObject("isDelete" , Boolean.TRUE);
         } else {
             modelAndView.setViewName("redirect:/");
         }
@@ -128,9 +127,6 @@ public class AppController {
         request.getSession().invalidate();
         return "redirect:/main?logout";
     }
-
-    @Autowired
-    MessageService messageService;
 
     @RequestMapping(value = "/get-file/{type}/{filename}", method = RequestMethod.GET)
     public void getFile(HttpServletResponse response,

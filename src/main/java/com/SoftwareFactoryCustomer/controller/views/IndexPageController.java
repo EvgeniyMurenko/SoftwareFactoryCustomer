@@ -47,7 +47,7 @@ public class IndexPageController {
                                   @RequestParam(value = "isDelete", required = false) Boolean isDelete,
                                   HttpSession httpSession) {
 
-        if (isCurrentAuthenticationAnonymous() || httpSession.getAttribute("UserName") != null) {
+        if (isCurrentAuthenticationAnonymous() || httpSession.getAttribute("UserName") != null || isDelete) {
             ModelAndView mainPage = new ModelAndView("index");
 
             if (isEstimateSuccess != null) {
@@ -70,9 +70,13 @@ public class IndexPageController {
 
             ArrayList<Estimate> estimatesSorted = getSixEstimatesFromArray(estimateUnsorted);
             mainPage.addObject("estimates", estimatesSorted);
+
+            System.out.println("GO TO MAIN PAGE");
+
             return mainPage;
         } else {
             ModelAndView modelAndView = new ModelAndView("redirect:/list");
+            System.out.println("GO TO LIST");
             return modelAndView;
         }
     }

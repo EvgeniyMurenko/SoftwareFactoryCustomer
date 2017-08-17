@@ -91,7 +91,7 @@
                 <div class="form-group text-right mt25">
                     <a href="/cabinet/case/<%    out.print(Long.toString(aCase.getId()));  %>"
                        class="btn btn-default btn-mobile">Back</a>
-                    <button type="submit" class="btn btn-primary btn-mobile">Send</button>
+                    <button type="submit" class="btn btn-primary btn-mobile btn-submit">Send</button>
                 </div>
             </div>
         </div>

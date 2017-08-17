@@ -20,6 +20,22 @@ jQuery(document).ready(function ($) {
         });
     });
 
+
+    $('.btn-submit').click(function() {
+
+        var form = $(this).parents('form:first');
+
+        form.submit(function () {
+            var $submitButton =  $( ".btn-submit" );
+
+            $submitButton.prop("disabled", true);
+            $submitButton.text("잠깐만 기다려주세요 !");
+        });
+
+    });
+
+
+
     // Back to top
     var offset = 300,
         offset_opacity = 1200,

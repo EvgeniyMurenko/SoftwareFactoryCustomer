@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <div class="col-lg-12 text-left">
-                                    <button type="submit" class="btn btn-primary btn-mobile">로그인</button>
+                                    <button type="submit" class="btn btn-primary btn-mobile btn-submit">로그인</button>
                                 </div>
                             </div>
 
@@ -61,7 +61,7 @@
 
                 <!-- Authorization modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-mobile" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-default btn-mobile"  data-dismiss="modal">닫기</button>
                 </div>
             </form>
         </div>
