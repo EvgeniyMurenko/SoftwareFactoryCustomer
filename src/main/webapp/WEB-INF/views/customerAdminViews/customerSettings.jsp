@@ -30,7 +30,7 @@
 
 
     <%--information form--%>
-    <form id="infoSettings" action="/cabinet/infoSettings?${_csrf.parameterName}=${_csrf.token}" method="POST">
+    <form id="infoSettings" action="/cabinet/infoSettings" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -75,7 +75,7 @@
     <%-- end information form--%>
 
     <%--password form--%>
-    <form id="passwordSettings" action="/cabinet/passwordSettings?${_csrf.parameterName}=${_csrf.token}" method="POST">
+    <form id="passwordSettings" action="/cabinet/passwordSettings" method="POST">
         <div class="row">
             <div class="col-md-6">
 

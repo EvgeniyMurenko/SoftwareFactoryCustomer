@@ -44,7 +44,7 @@
             list</a></div>
 
         <%if (!caseStatus.equals(StatusEnum.CLOSE.toString())) {%>
-        <form action="/cabinet/case/<% out.print(caseId); %>/close_case?${_csrf.parameterName}=${_csrf.token}"
+        <form action="/cabinet/case/<% out.print(caseId); %>/close_case"
               method="POST">
             <div class="col-md-6 text-right">
                 <a href="/cabinet/case/<%out.print(caseId); %>/answer"

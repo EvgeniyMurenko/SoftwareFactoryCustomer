@@ -10,10 +10,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <c:url var="loginUrl" value="/login?${_csrf.parameterName}=${_csrf.token}"/>
 
             <!-- Authorization modal title -->
-            <form action="${loginUrl}" id="authorizationForm" method="post" class="form-horizontal">
+            <form action="/login" id="authorizationForm" method="post" class="form-horizontal">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4><i class="fa fa-user-o" aria-hidden="true"></i> 고객님 CASE 로그인에 오신 것을 환영합니다.</h4>

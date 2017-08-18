@@ -67,7 +67,7 @@
     </table>
     <!-- #End Case table -->
 
-    <form action="/cabinet/case/<% out.print(Long.toString(caseId)); %>/print_message?${_csrf.parameterName}=${_csrf.token}"
+    <form action="/cabinet/case/<% out.print(Long.toString(caseId)); %>/print_message"
           method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <textarea class="form-control" name="message" rows="7" id="editor" placeholder="Message"></textarea>

@@ -50,7 +50,7 @@
         <!-- #End Warning Block -->
 
         <!-- Estimation -->
-        <c:url var="createCase" value="/cabinet/createCase?${_csrf.parameterName}=${_csrf.token}"/>
+        <c:url var="createCase" value="/cabinet/createCase"/>
         <form action="${createCase}" enctype="multipart/form-data" method="POST">
             <div class="form-group">
                 <label for="project">Project</label>

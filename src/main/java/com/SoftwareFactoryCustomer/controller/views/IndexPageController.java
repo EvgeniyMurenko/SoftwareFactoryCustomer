@@ -71,12 +71,9 @@ public class IndexPageController {
             ArrayList<Estimate> estimatesSorted = getSixEstimatesFromArray(estimateUnsorted);
             mainPage.addObject("estimates", estimatesSorted);
 
-            System.out.println("GO TO MAIN PAGE");
-
             return mainPage;
         } else {
             ModelAndView modelAndView = new ModelAndView("redirect:/list");
-            System.out.println("GO TO LIST");
             return modelAndView;
         }
     }
